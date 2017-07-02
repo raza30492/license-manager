@@ -1,5 +1,7 @@
 package com.jazasoft.licensemanager.entity;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -7,6 +9,7 @@ import java.util.Set;
 /**
  * Created by mdzahidraza on 02/07/17.
  */
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @Entity
 public class Client extends Auditable<String> {
 

@@ -1,7 +1,7 @@
 package com.jazasoft.licensemanager.assembler;
 
-import com.jazasoft.licensemanager.entity.Product;
-import com.jazasoft.licensemanager.restcontroller.ProductRestController;
+import com.jazasoft.licensemanager.entity.Client;
+import com.jazasoft.licensemanager.restcontroller.ClientRestController;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,21 +12,21 @@ import org.springframework.hateoas.mvc.ResourceAssemblerSupport;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ProductAssembler extends ResourceAssemblerSupport<Product, Resource>{
+public class ClientAssembler extends ResourceAssemblerSupport<Client, Resource>{
 
-    public ProductAssembler(){
-        super(ProductRestController.class, Resource.class);
+    public ClientAssembler(){
+        super(ClientRestController.class, Resource.class);
     }
 
     @Override
-    public Resource toResource(Product product) {
-        return new Resource<>(product, linkTo(methodOn(ProductRestController.class).getProduct(product.getId())).withSelfRel());
+    public Resource toResource(Client client) {
+        return new Resource<>(client, linkTo(methodOn(ClientRestController.class).getClient(client.getId())).withSelfRel());
     }
 
     @Override
-    public List<Resource> toResources(Iterable<? extends Product> users) {
+    public List<Resource> toResources(Iterable<? extends Client> users) {
         List<Resource> resources = new ArrayList<>();
-        for(Product user : users) {
+        for(Client user : users) {
             resources.add(toResource(user));
         }
         return resources;

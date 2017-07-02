@@ -1,5 +1,6 @@
 package com.jazasoft.licensemanager.entity;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import org.springframework.data.domain.*;
 
 import javax.persistence.*;
@@ -10,6 +11,7 @@ import java.util.Set;
 /**
  * Created by mdzahidraza on 02/07/17.
  */
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @Entity
 public class Product extends Auditable<String> {
 

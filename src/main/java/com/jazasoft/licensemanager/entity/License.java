@@ -1,5 +1,7 @@
 package com.jazasoft.licensemanager.entity;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
@@ -7,6 +9,7 @@ import java.util.Date;
 /**
  * Created by mdzahidraza on 02/07/17.
  */
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @Entity
 public class License extends Auditable<String>{
 
@@ -17,6 +20,12 @@ public class License extends Auditable<String>{
     @ManyToOne(optional = false)
     @JoinColumn(name = "client_id")
     private Client client;
+
+    @Transient
+    private Long productId;
+
+    @Transient
+    private Long clientId;
 
     @Column(nullable = false)
     private String productCode;
@@ -122,5 +131,21 @@ public class License extends Auditable<String>{
 
     public void setNoOfUsers(Long noOfUsers) {
         this.noOfUsers = noOfUsers;
+    }
+
+    public Long getProductId() {
+        return productId;
+    }
+
+    public void setProductId(Long productId) {
+        this.productId = productId;
+    }
+
+    public Long getClientId() {
+        return clientId;
+    }
+
+    public void setClientId(Long clientId) {
+        this.clientId = clientId;
     }
 }
