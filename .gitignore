@@ -1,0 +1,5 @@
+/nb-configuration.xml
+node_modules/
+target/
+.idea/
+*.iml
