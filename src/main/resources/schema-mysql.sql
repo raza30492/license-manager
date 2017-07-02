@@ -24,6 +24,64 @@ CREATE TABLE IF NOT EXISTS `users` (
   KEY `IDX7516795akd6qg7e0i8e5rv58s` (`name`,`email`,`username`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
+CREATE TABLE `product` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` varchar(255) DEFAULT NULL,
+  `enabled` bit(1) DEFAULT NULL,
+  `modified_at` datetime DEFAULT NULL,
+  `modified_by` varchar(255) DEFAULT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  `name` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UK_jmivyxk9rmgysrmsqw15lqr5b` (`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+CREATE TABLE `client` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` varchar(255) DEFAULT NULL,
+  `email` varchar(255) NOT NULL,
+  `enabled` bit(1) DEFAULT NULL,
+  `modified_at` datetime DEFAULT NULL,
+  `modified_by` varchar(255) DEFAULT NULL,
+  `city` varchar(255) DEFAULT NULL,
+  `country` varchar(255) DEFAULT NULL,
+  `street` varchar(255) DEFAULT NULL,
+  `zip_code` varchar(255) DEFAULT NULL,
+  `name` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UK_dn5jasds5r1j3ewo5k3nhwkkq` (`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+CREATE TABLE `license` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` varchar(255) DEFAULT NULL,
+  `enabled` bit(1) DEFAULT NULL,
+  `modified_at` datetime DEFAULT NULL,
+  `modified_by` varchar(255) DEFAULT NULL,
+  `activated` bit(1) NOT NULL,
+  `license_type` varchar(255) DEFAULT NULL,
+  `mac_id` varchar(255) DEFAULT NULL,
+  `no_of_users` bigint(20) DEFAULT NULL,
+  `product_code` varchar(255) NOT NULL,
+  `product_key` varchar(255) NOT NULL,
+  `purchased_on` date NOT NULL,
+  `validity` int(11) NOT NULL,
+  `client_id` bigint(20) NOT NULL,
+  `product_id` bigint(20) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK8ulxglde1mgtan8kl7sbe2ro3` (`client_id`),
+  KEY `FKcaxj7wyy1p2htf4n88cbtft6y` (`product_id`),
+  CONSTRAINT `FK8ulxglde1mgtan8kl7sbe2ro3` FOREIGN KEY (`client_id`) REFERENCES `client` (`id`),
+  CONSTRAINT `FKcaxj7wyy1p2htf4n88cbtft6y` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+
+------------------------------------------------
+---      Tables For OAuth2 Entities           ----
 ------------------------------------------------
 
 create table if not exists oauth_client_details (

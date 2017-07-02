@@ -52,11 +52,6 @@ public class Application extends SpringBootServletInitializer {
         };
     }
     
-    @Bean
-    public TokenStore tokenStore() {
-        return new InMemoryTokenStore();
-    }
-    
      @Bean
     public Mapper dozerBeanMapper() {
         List<String> list = new ArrayList<>();

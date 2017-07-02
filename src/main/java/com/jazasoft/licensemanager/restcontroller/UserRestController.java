@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.Resource;
+import org.springframework.hateoas.Resources;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -36,11 +37,8 @@ public class UserRestController{
     public ResponseEntity<?> listAllUsers(@RequestParam(value = "after", defaultValue = "0") Long after) {
         logger.debug("listAllUsers()");
         List<UserDto> users = userService.findAllAfter(after);
-        Map<String, Object> resp = new HashMap<>();
-        resp.put("users", userAssembler.toResources(users));
-        resp.put("lastSync", System.currentTimeMillis());
-        Resource resource = new Resource(resp, linkTo(UserRestController.class).withSelfRel());
-        return new ResponseEntity<>(resource, HttpStatus.OK);
+        Resources resources = new Resources(userAssembler.toResources(users), linkTo(UserRestController.class).withSelfRel());
+        return new ResponseEntity<>(resources, HttpStatus.OK);
     }
   
     @GetMapping(ApiUrls.URL_USERS_USER)

@@ -1,17 +1,17 @@
 server:
-  port: 8081
+  port: 8082
 
 spring:
   datasource:
     ### PostgreSQL configuration ###
-#    url: jdbc:postgresql://localhost:5432/licensemanager
+#    url: jdbc:postgresql://localhost:5432/license_manager
 #    username: mdzahidraza
 #    password: zahid
 #    platform: postgresql
 #    initialize: true
 #    continue-on-error: true
     ### MySQL configuration ###
-    url: jdbc:mysql://localhost:3306/licensemanager?createDatabaseIfNotExist=true
+    url: jdbc:mysql://localhost:3306/license_manager?createDatabaseIfNotExist=true
     username: root
     password: zahid
     platform: mysql
@@ -21,7 +21,7 @@ spring:
   jpa:
     show-sql: false
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
 
 security:
   filter-order: 0

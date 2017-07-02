@@ -13,6 +13,21 @@
             <b>roles</b>
         </field-exclude>
 
-
     </mapping>
+
+    <mapping map-null="false">
+        <class-a>com.jazasoft.licensemanager.entity.Product</class-a>
+        <class-b>com.jazasoft.licensemanager.entity.Product</class-b>
+    </mapping>
+
+    <mapping map-null="false">
+        <class-a>com.jazasoft.licensemanager.entity.Client</class-a>
+        <class-b>com.jazasoft.licensemanager.entity.Client</class-b>
+    </mapping>
+
+    <mapping map-null="false">
+        <class-a>com.jazasoft.licensemanager.entity.License</class-a>
+        <class-b>com.jazasoft.licensemanager.entity.License</class-b>
+    </mapping>
+
 </mappings>
