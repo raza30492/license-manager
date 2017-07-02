@@ -33,6 +33,7 @@ CREATE TABLE `product` (
   `modified_by` varchar(255) DEFAULT NULL,
   `description` varchar(255) DEFAULT NULL,
   `name` varchar(255) NOT NULL,
+  `product_prefix` varchar(10) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UK_jmivyxk9rmgysrmsqw15lqr5b` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -68,10 +69,12 @@ CREATE TABLE `license` (
   `product_code` varchar(255) NOT NULL,
   `product_key` varchar(255) NOT NULL,
   `purchased_on` date NOT NULL,
+  `activated_on` date DEFAULT NULL,
   `validity` int(11) NOT NULL,
   `client_id` bigint(20) NOT NULL,
   `product_id` bigint(20) NOT NULL,
   PRIMARY KEY (`id`),
+  UNIQUE KEY `UK_LICENSE_PRODUCT_CODE` (`product_code`)
   KEY `FK8ulxglde1mgtan8kl7sbe2ro3` (`client_id`),
   KEY `FKcaxj7wyy1p2htf4n88cbtft6y` (`product_id`),
   CONSTRAINT `FK8ulxglde1mgtan8kl7sbe2ro3` FOREIGN KEY (`client_id`) REFERENCES `client` (`id`),
