@@ -2,10 +2,14 @@ package com.jazasoft.licensemanager.entity;
 
 import java.util.*;
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.jazasoft.licensemanager.Role;
 import com.jazasoft.licensemanager.util.Utils;
+import com.jazasoft.licensemanager.validation.Roles;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,12 +19,17 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @Table(name = "users", indexes = @Index(columnList = "name,email,username"))
 public class User extends Auditable<String> implements UserDetails{
 
+    private static final long serialVersionUID = 8541623741428134463L;
+
+    @NotNull @Size(min = 3, max = 50)
     @Column(nullable = false)
     private String name;
 
+    @NotNull @Pattern(regexp="^(?=.*[a-zA-Z])[a-zA-Z0-9_\\-\\.]{3,50}$")
     @Column(nullable = false, unique = true)
     private String username;
 
+    @NotNull @Pattern(regexp="^(?=.*[a-zA-Z])[a-zA-Z0-9_\\-@\\.]{5,50}$")
     @Column(nullable = false, unique = true)
     private String email;
 
@@ -28,6 +37,7 @@ public class User extends Auditable<String> implements UserDetails{
     @Column(nullable = false)
     private String password;
 
+    @NotNull @Pattern(regexp="[0-9]{10}")
     private String mobile;
 
     @JsonIgnore
@@ -46,6 +56,7 @@ public class User extends Auditable<String> implements UserDetails{
 
     private boolean credentialExpired;
 
+    @NotNull @Roles(enumClass = Role.class)
     private String roles;
 
     public User() {
@@ -63,18 +74,19 @@ public class User extends Auditable<String> implements UserDetails{
         this.credentialExpired = credentialExpired;
     }
 
-    public User(String name, String username, String email, String password, String mobile) {
+    public User(String name, String username, String email, String mobile, String roles) {
         this.name = name;
         this.username = username;
         this.email = email;
-        setPassword(password);
         this.mobile = mobile;
+        this.roles = roles;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        Set<Role> roleList = getRoles();
+        Set<Role> roleList = Utils.getRoles(roles);
         List<GrantedAuthority> rls = new ArrayList<>();
+        if (roleList == null) return rls;
         for (Role role: roleList) {
             rls.add(new SimpleGrantedAuthority(role.getValue()));
         }
@@ -179,34 +191,29 @@ public class User extends Auditable<String> implements UserDetails{
         this.otpSentAt = otpSentAt;
     }
 
-    public void setRoles(Set<Role> roles) {
-        if (roles != null) {
-            StringBuilder builder = new StringBuilder();
-            for (Role role: roles) {
-                builder.append(role.getValue()).append(",");
-            }
-            if (builder.length() > 0) {
-                builder.setLength(builder.length()-1);
-                this.roles = builder.toString();
-            }
-        }
+    public String getRoles() {
+        return roles;
     }
 
-    public Set<Role> getRoles() {
-        return Utils.getRoles(this.roles);
+    public void setRoles(String roles) {
+        this.roles = roles;
     }
 
     @Override
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", modifiedAt=" + modifiedAt +
                 ", name='" + name + '\'' +
-                ", enabled=" + enabled +
                 ", username='" + username + '\'' +
                 ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
                 ", mobile='" + mobile + '\'' +
+                ", retryCount=" + retryCount +
+                ", otp='" + otp + '\'' +
+                ", otpSentAt=" + otpSentAt +
+                ", accountExpired=" + accountExpired +
+                ", accountLocked=" + accountLocked +
+                ", credentialExpired=" + credentialExpired +
+                ", roles='" + roles + '\'' +
                 '}';
     }
 }

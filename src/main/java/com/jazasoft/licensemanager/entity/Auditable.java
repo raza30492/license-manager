@@ -1,5 +1,6 @@
 package com.jazasoft.licensemanager.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -21,19 +22,23 @@ public class Auditable<U> implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long id;
 
+    @JsonIgnore
     @CreatedDate
     protected Date createdAt;
 
+    @JsonIgnore
     @LastModifiedDate
     protected Date modifiedAt;
 
+    @JsonIgnore
     @CreatedBy
     protected U createdBy;
 
+    @JsonIgnore
     @LastModifiedBy
     protected U modifiedBy;
 
-    protected Boolean enabled;
+    protected boolean enabled;
 
     public Auditable() {
     }
@@ -42,11 +47,11 @@ public class Auditable<U> implements Serializable{
         this.id = id;
     }
 
-    public Auditable(Boolean enabled) {
+    public Auditable(boolean enabled) {
         this.enabled = enabled;
     }
 
-    public Auditable(Long id, Boolean enabled) {
+    public Auditable(Long id, boolean enabled) {
         this.id = id;
         this.enabled = enabled;
     }
@@ -59,11 +64,11 @@ public class Auditable<U> implements Serializable{
         this.createdAt = createdAt;
     }
 
-    public Boolean getEnabled() {
+    public boolean getEnabled() {
         return enabled;
     }
 
-    public void setEnabled(Boolean enabled) {
+    public void setEnabled(boolean enabled) {
         this.enabled = enabled;
     }
 

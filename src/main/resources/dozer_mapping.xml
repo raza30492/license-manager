@@ -7,12 +7,6 @@
     <mapping map-null="false">
         <class-a>com.jazasoft.licensemanager.dto.UserDto</class-a>
         <class-b>com.jazasoft.licensemanager.entity.User</class-b>
-
-        <field-exclude>
-            <a>roles</a>
-            <b>roles</b>
-        </field-exclude>
-
     </mapping>
 
     <mapping map-null="false">

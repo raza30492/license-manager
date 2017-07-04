@@ -17,6 +17,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.provider.token.TokenStore;
@@ -45,7 +46,7 @@ public class Application extends SpringBootServletInitializer {
         return (args) -> {
             if(userService.count() == 0){
                 User user = new User("Md Zahid Raza","zahid7292","zahid7292@gmail.com","admin","8987525008",true,false,false,false);
-                user.setRoles(Utils.getRoles("ROLE_ADMIN"));
+                user.setRoles("ROLE_ADMIN");
                 userService.save(user);
                 //userService.save(new UserDto("Md Zahid Raza","zahid7292","zahid7292@gmail.com","ROLE_ADMIN","8987525008"));
             }           
