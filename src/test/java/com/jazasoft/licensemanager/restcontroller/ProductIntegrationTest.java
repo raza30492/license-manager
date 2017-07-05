@@ -53,10 +53,11 @@ public class ProductIntegrationTest {
         params.add("grant_type", "password");
         params.add("username", "zahid7292");
         params.add("password", "admin");
-        MvcResult mvcResult = mvc.perform(post(ApiUrls.OAUTH_URL)
-                .params(params)
-                .header("Authorization", "Basic Y2xpZW50OnNlY3JldA==")
-        )
+        MvcResult mvcResult = mvc
+                .perform(post(ApiUrls.OAUTH_URL)
+                        .params(params)
+                        .header("Authorization", "Basic Y2xpZW50OnNlY3JldA==")
+                )
                 .andExpect(status().isOk())
                 .andReturn();
         String resp = mvcResult.getResponse().getContentAsString();
@@ -92,11 +93,12 @@ public class ProductIntegrationTest {
     public void createAndDeleteProduct() throws Exception {
         Product product = new Product("Test Product", "test description", "TST");
         System.out.println("-$$$-" + mapper.writeValueAsString(product));
-        MvcResult mvcResult = mvc.perform(post(ApiUrls.ROOT_URL_PRODUCTS)
-                .content(mapper.writeValueAsString(product))
-                .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .header("Authorization", "Bearer " + accessToken)
-        )
+        MvcResult mvcResult = mvc
+                .perform(post(ApiUrls.ROOT_URL_PRODUCTS)
+                        .content(mapper.writeValueAsString(product))
+                        .contentType(MediaType.APPLICATION_JSON_UTF8)
+                        .header("Authorization", "Bearer " + accessToken)
+                )
                 .andExpect(status().isCreated())
                 .andReturn();
         String locationUri = mvcResult.getResponse().getHeader("Location");
@@ -115,32 +117,35 @@ public class ProductIntegrationTest {
     @Test
     public void createProductBadRequest() throws Exception {
         Product product = new Product();
-        this.mvc.perform(post(ApiUrls.ROOT_URL_PRODUCTS)
-                .content(mapper.writeValueAsString(product))
-                .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .header("Authorization", "Bearer " + accessToken)
-        )
+        this.mvc
+                .perform(post(ApiUrls.ROOT_URL_PRODUCTS)
+                        .content(mapper.writeValueAsString(product))
+                        .contentType(MediaType.APPLICATION_JSON_UTF8)
+                        .header("Authorization", "Bearer " + accessToken)
+                )
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$", hasSize(2)));
 
         //Test each fields one by one
         product = new Product("", "test decription", "ANDON");
-        this.mvc.perform(post(ApiUrls.ROOT_URL_PRODUCTS)
-                .content(mapper.writeValueAsString(product))
-                .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .header("Authorization", "Bearer " + accessToken)
-        )
+        this.mvc
+                .perform(post(ApiUrls.ROOT_URL_PRODUCTS)
+                        .content(mapper.writeValueAsString(product))
+                        .contentType(MediaType.APPLICATION_JSON_UTF8)
+                        .header("Authorization", "Bearer " + accessToken)
+                )
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$", hasSize(1)))
                 .andExpect(jsonPath("$[0].field", is("name")))
                 .andExpect(jsonPath("$[0].message", containsString("length must be between 3")));
 
         product = new Product("Md Zahid Raza", "test product", "");
-        this.mvc.perform(post(ApiUrls.ROOT_URL_PRODUCTS)
-                .content(mapper.writeValueAsString(product))
-                .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .header("Authorization", "Bearer " + accessToken)
-        )
+        this.mvc
+                .perform(post(ApiUrls.ROOT_URL_PRODUCTS)
+                        .content(mapper.writeValueAsString(product))
+                        .contentType(MediaType.APPLICATION_JSON_UTF8)
+                        .header("Authorization", "Bearer " + accessToken)
+                )
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$", hasSize(1)))
                 .andExpect(jsonPath("$[0].field", is("productPrefix")));

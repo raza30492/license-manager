@@ -60,4 +60,12 @@ public class ClientService {
         mapper.map(client,client2);
         return client2;
     }
+
+    @Transactional
+    public void delete(Long id) {
+        LOGGER.debug("update");
+        Client client = clientRepository.findOne(id);
+        client.setEnabled(false);
+    }
+
 }

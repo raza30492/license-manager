@@ -52,7 +52,8 @@ CREATE TABLE `client` (
   `zip_code` varchar(255) DEFAULT NULL,
   `name` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `UK_dn5jasds5r1j3ewo5k3nhwkkq` (`name`)
+  UNIQUE KEY `UK_dn5jasds5r1j3ewo5k3nhwkkq` (`name`),
+  UNIQUE KEY `UK_6dotkott2kj65gjh7d0m25fb7` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE `license` (

@@ -81,4 +81,14 @@ public class ClientRestController {
         client = clientService.update(client);
         return new ResponseEntity<>(clientAssembler.toResource(client), HttpStatus.OK);
     }
+
+    @DeleteMapping(ApiUrls.URL_CLIENTS_CLIENT)
+    public ResponseEntity<?> deleteClient(@PathVariable("clientId") long id) {
+        LOGGER.debug("deleteClient(): id = {}",id);
+        if (!clientService.exists(id)) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        clientService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
 }

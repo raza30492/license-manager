@@ -25,11 +25,11 @@ public class User extends Auditable<String> implements UserDetails{
     @Column(nullable = false)
     private String name;
 
-    @NotNull @Pattern(regexp="^(?=.*[a-zA-Z])[a-zA-Z0-9_\\-\\.]{3,50}$")
+    @NotNull @Pattern(regexp="^[a-zA-Z0-9_.-]{3,50}$")
     @Column(nullable = false, unique = true)
     private String username;
 
-    @NotNull @Pattern(regexp="^(?=.*[a-zA-Z])[a-zA-Z0-9_\\-@\\.]{5,50}$")
+    @NotNull @Pattern(regexp = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$")
     @Column(nullable = false, unique = true)
     private String email;
 

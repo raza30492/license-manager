@@ -1,8 +1,14 @@
 package com.jazasoft.licensemanager.entity;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import org.hibernate.validator.constraints.Email;
+
 
 import javax.persistence.*;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -13,12 +19,15 @@ import java.util.Set;
 @Entity
 public class Client extends Auditable<String> {
 
+    @NotNull @Size(min = 3, max = 50)
     @Column(nullable = false, unique = true)
     private String name;
 
-    @Column(nullable = false)
+    @NotNull @Pattern(regexp = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$")
+    @Column(nullable = false, unique = true)
     private String email;
 
+    @NotNull @Valid
     @Embedded
     private Address address;
 
@@ -26,6 +35,11 @@ public class Client extends Auditable<String> {
     private Set<License> licenses = new HashSet<>();
 
     public Client() {
+    }
+
+    public Client(String name, String email) {
+        this.name = name;
+        this.email = email;
     }
 
     public String getName() {
