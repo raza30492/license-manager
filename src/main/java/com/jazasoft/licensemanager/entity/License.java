@@ -48,7 +48,11 @@ public class License extends Auditable<String>{
 
     private String macId;
 
+    @Column(nullable = false)
     private String licenseType;
+
+    @Column(nullable = false)
+    private String licenseFlavour;
 
     @Column(nullable = false)
     private Integer validity;   // -1: perpetual, n: Annual|Trial   [in number of days]
@@ -161,5 +165,13 @@ public class License extends Auditable<String>{
 
     public void setClientId(Long clientId) {
         this.clientId = clientId;
+    }
+
+    public String getLicenseFlavour() {
+        return licenseFlavour;
+    }
+
+    public void setLicenseFlavour(String licenseFlavour) {
+        this.licenseFlavour = licenseFlavour;
     }
 }

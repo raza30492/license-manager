@@ -7,11 +7,5 @@
     <mapping >
         <class-a>com.jazasoft.licensemanager.dto.UserDto</class-a>
         <class-b>com.jazasoft.licensemanager.entity.User</class-b>
-
-        <field custom-converter="com.jazasoft.licensemanager.dozerconverter.RoleConverter">
-            <a>roles</a>
-            <b>roles</b>
-        </field>
-
     </mapping>
 </mappings>

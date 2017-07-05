@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import org.springframework.data.domain.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -15,11 +17,13 @@ import java.util.Set;
 @Entity
 public class Product extends Auditable<String> {
 
+    @NotNull @Size(min = 3, max = 50)
     @Column(nullable = false, unique = true)
     private String name;
 
     private String description;
 
+    @NotNull @Size(min = 3, max = 5)
     @Column(nullable = false)
     private String productPrefix;
 
@@ -27,6 +31,12 @@ public class Product extends Auditable<String> {
     Set<License> licenses = new HashSet<>();
 
     public Product() {
+    }
+
+    public Product(String name, String description, String productPrefix) {
+        this.name = name;
+        this.description = description;
+        this.productPrefix = productPrefix;
     }
 
     public String getName() {
