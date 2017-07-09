@@ -2,8 +2,10 @@ package com.jazasoft.licensemanager.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.jazasoft.licensemanager.validation.FixedEnum;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -24,9 +26,11 @@ public class License extends Auditable<String>{
     @JoinColumn(name = "client_id")
     private Client client;
 
+    @NotNull
     @Transient
     private Long productId;
 
+    @NotNull
     @Transient
     private Long clientId;
 
@@ -48,19 +52,32 @@ public class License extends Auditable<String>{
 
     private String macId;
 
+    @NotNull @FixedEnum(enumClass = LicenseType.class)
     @Column(nullable = false)
     private String licenseType;
 
+    @NotNull @FixedEnum(enumClass = LicenseFlavour.class)
     @Column(nullable = false)
     private String licenseFlavour;
 
+    @NotNull
     @Column(nullable = false)
     private Integer validity;   // -1: perpetual, n: Annual|Trial   [in number of days]
 
+    @NotNull
     private Long noOfUsers;  // Perpetual: Not applicable, Trial|Annual: No of active Users
 
     public License() {
         super();
+    }
+
+    public License(Long productId, Long clientId, String licenseType, String licenseFlavour, Integer validity, Long noOfUsers) {
+        this.productId = productId;
+        this.clientId = clientId;
+        this.licenseType = licenseType;
+        this.licenseFlavour = licenseFlavour;
+        this.validity = validity;
+        this.noOfUsers = noOfUsers;
     }
 
     public Product getProduct() {

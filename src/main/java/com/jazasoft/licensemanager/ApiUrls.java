@@ -19,5 +19,5 @@ public class ApiUrls {
     public static final String URL_CLIENTS_CLIENT_SEARCH_BY_NAME = "/search/byName";
     public static final String ROOT_URL_LICENSES = "/api/licenses";
     public static final String URL_LICENSES_LICENSE = "/{licenseId}";
-
+    public static final String URL_LICENSES_VALIDATE = "/validate";
 }

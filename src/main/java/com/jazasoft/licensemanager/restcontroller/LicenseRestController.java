@@ -53,6 +53,16 @@ public class LicenseRestController {
         return new ResponseEntity<>(licenseAssembler.toResource(license), HttpStatus.OK);
     }
 
+    @GetMapping(ApiUrls.URL_LICENSES_VALIDATE)
+    public ResponseEntity<?> validateLicense(@RequestParam("productCode") String productCode, @RequestParam("productKey") String productKey) {
+        LOGGER.debug("validateLicense(): productCode = {}, productKey = {}",productCode, productKey);
+        License license = licenseService.validate(productCode, productKey);
+        if (license == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(licenseAssembler.toResource(license), HttpStatus.OK);
+    }
+
     @PostMapping
     public ResponseEntity<Void> createLicense(@Valid @RequestBody License license) {
         LOGGER.debug("createLicense():\n {}", license.toString());
@@ -71,4 +81,6 @@ public class LicenseRestController {
         license = licenseService.update(license);
         return new ResponseEntity<>(licenseAssembler.toResource(license), HttpStatus.OK);
     }
+
+
 }

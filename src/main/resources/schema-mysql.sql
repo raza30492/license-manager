@@ -76,7 +76,7 @@ CREATE TABLE `license` (
   `client_id` bigint(20) NOT NULL,
   `product_id` bigint(20) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `UK_LICENSE_PRODUCT_CODE` (`product_code`)
+  UNIQUE KEY `UK_LICENSE_PRODUCT_CODE` (`product_code`),
   KEY `FK8ulxglde1mgtan8kl7sbe2ro3` (`client_id`),
   KEY `FKcaxj7wyy1p2htf4n88cbtft6y` (`product_id`),
   CONSTRAINT `FK8ulxglde1mgtan8kl7sbe2ro3` FOREIGN KEY (`client_id`) REFERENCES `client` (`id`),

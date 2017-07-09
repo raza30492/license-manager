@@ -11,6 +11,6 @@ INSERT INTO product (id, created_at, created_by, enabled, modified_at, modified_
 (1,'2017-07-03 02:43:07','Md Zahid Raza',true,'2017-07-03 02:43:07','Md Zahid Raza','A Timeline Tracking Software for Apparrel Industories','Time And Action Calender','TNA'),
 (2,'2017-07-03 02:43:07','Md Zahid Raza',true,'2017-07-03 02:43:07','Md Zahid Raza','A Issue Tracking Software','Andon System','ANDON');
 
---INSERT INTO product (id, created_at, created_by, enabled, modified_at, modified_by, description, name, product_prefix)  values
---(1, 'Time and Action Calender','A Timeline tracking software for Apparrel Companies', 'TNA' ),
-----(2, 'Andon System','Issue Tracking software', 'ADN' );
+INSERT INTO `license` (`id`,`created_at`,`created_by`,`enabled`,`modified_at`,`modified_by`,`activated`,`license_type`,`license_flavour`,`mac_id`,`no_of_users`,`product_code`,`product_key`,`purchased_on`,`activated_on`,`validity`,`client_id`,`product_id`) VALUES
+(1,'2017-07-06 01:11:37','Md Zahid Raza','0','2017-07-06 01:11:37','Md Zahid Raza','0','TRIAL','EXPRESS',NULL,20,'TNA5765713','RTRD-DEQV-XNVO-ORUC','2017-07-06',NULL,30,1,1),
+(2,'2017-07-06 01:13:06','Md Zahid Raza','0','2017-07-06 01:13:06','Md Zahid Raza','0','ANNUAL','ULTIMATE',NULL,20,'ANDON8831329','EPAK-HFOS-WKNM-EJPM','2017-07-06',NULL,30,1,2);

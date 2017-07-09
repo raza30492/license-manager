@@ -54,6 +54,11 @@ public class LicenseService {
         return licenseRepository.exists(id);
     }
 
+    public License validate(String productCode, String productKey) {
+        LOGGER.debug("validate");
+        return licenseRepository.findOneByProductCodeAndProductKey(productCode, productKey);
+    }
+
     @Transactional
     public License save(License license) {
         LOGGER.debug("save");
