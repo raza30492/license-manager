@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Link;
+import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,8 +18,10 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
+import java.util.Set;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 /**
  * Created by mdzahidraza on 03/07/17.
@@ -43,9 +46,10 @@ public class ProductRestController {
         return new ResponseEntity<>(resources, HttpStatus.OK);
     }
 
+    @GetMapping(ApiUrls.URL_PRODUCTS_FLAVOURS)
     public ResponseEntity<?> getProductFlavours() {
         LOGGER.debug("getProductFalvours");
-        List<String> flavours = productService.getProductFlavours();
+        Set<String> flavours = productService.getProductFlavours();
         return ResponseEntity.ok(flavours);
     }
 

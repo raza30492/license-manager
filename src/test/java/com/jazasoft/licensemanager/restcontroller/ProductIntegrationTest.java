@@ -150,17 +150,28 @@ public class ProductIntegrationTest {
                 .andExpect(jsonPath("$", hasSize(1)))
                 .andExpect(jsonPath("$[0].field", is("productPrefix")));
 
-//        product = new Product("Md Zahid Raza", "test product", "TST","");
-//        this.mvc
-//                .perform(post(ApiUrls.ROOT_URL_PRODUCTS)
-//                        .content(mapper.writeValueAsString(product))
-//                        .contentType(MediaType.APPLICATION_JSON_UTF8)
-//                        .header("Authorization", "Bearer " + accessToken)
-//                )
-//                .andExpect(status().isBadRequest())
-//                .andExpect(jsonPath("$", hasSize(1)))
-//                .andExpect(jsonPath("$[0].field", is("flavours")));
+        product = new Product("Md Zahid Raza", "test product", "TST","");
+        this.mvc
+                .perform(post(ApiUrls.ROOT_URL_PRODUCTS)
+                        .content(mapper.writeValueAsString(product))
+                        .contentType(MediaType.APPLICATION_JSON_UTF8)
+                        .header("Authorization", "Bearer " + accessToken)
+                )
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$", hasSize(1)))
+                .andExpect(jsonPath("$[0].field", is("flavours")));
 
+    }
+
+    @Test
+    public void getProductFlavours() throws Exception{
+        this.mvc.perform(get(ApiUrls.ROOT_URL_PRODUCTS + ApiUrls.URL_PRODUCTS_FLAVOURS).header("Authorization", "Bearer " + accessToken))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andExpect(jsonPath("$", hasSize(3)))
+                .andExpect(jsonPath("$[0]", is("EXPRESS")))
+                .andExpect(jsonPath("$[1]", is("PREMIUM")))
+                .andExpect(jsonPath("$[2]", is("ULTIMATE")));
     }
 
 }

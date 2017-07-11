@@ -1,6 +1,8 @@
 package com.jazasoft.licensemanager.entity;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.jazasoft.licensemanager.validation.Fixed;
+import com.jazasoft.licensemanager.validation.FlavourFixedValue;
 import org.springframework.data.domain.*;
 
 import javax.persistence.*;
@@ -30,7 +32,7 @@ public class Product extends Auditable<String> {
     @Column(nullable = false)
     private String productPrefix;
 
-    @NotNull
+    @NotNull @Fixed(fixClass = FlavourFixedValue.class)
     private String flavours;
 
     @OneToMany(mappedBy = "product")

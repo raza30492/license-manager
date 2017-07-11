@@ -13,6 +13,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Created by mdzahidraza on 03/07/17.
@@ -65,11 +68,14 @@ public class ProductService {
         return product2;
     }
 
-    public List<String> getProductFlavours() {
-        List<String> result = null;
+    public Set<String> getProductFlavours() {
+        Set<String> result = null;
         try {
-            result = (List<String>) YamlUtils.getINSTANCE().getConfProperty(Constants.PRODUCT_FLAVOURS);
-        } catch (IOException e) {
+            result = ((List<Map>)YamlUtils.getINSTANCE().getConfProperty(Constants.PRODUCT_FLAVOURS))
+                    .stream()
+                    .map(map -> (String)map.get("flavour"))
+                    .collect(Collectors.toSet());
+        }catch (IOException e){
             e.printStackTrace();
         }
         return result;

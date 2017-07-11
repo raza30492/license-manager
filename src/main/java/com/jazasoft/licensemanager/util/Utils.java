@@ -27,7 +27,7 @@ public class Utils {
     }
 
     public static String getAppHome() {
-        return System.getenv("SAMPLE_HOME");
+        return System.getenv("LM_HOME");
     }
 
     public static Set<Role> getRoles(String roles) {
