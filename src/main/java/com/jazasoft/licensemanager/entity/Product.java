@@ -7,7 +7,9 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -75,6 +77,26 @@ public class Product extends Auditable<String> {
     public void setLicenses(Set<License> licenses) {
         this.licenses = licenses;
     }
+
+//    public List<String> getFlavours() {
+//        List<String> flavourList = new ArrayList<>();
+//        if (this.flavours == null) return flavourList;
+//        String[] items = this.flavours.split(",");
+//        for (String item: items) {
+//            flavourList.add(item);
+//        }
+//        return flavourList;
+//    }
+//
+//    public void setFlavours(List<String> flavours) {
+//        StringBuilder builder = new StringBuilder();
+//        flavours.forEach(flavour -> builder.append(flavour).append(","));
+//        if (builder.length() > 0) {
+//            builder.setLength(builder.length()-1);
+//        }
+//        this.flavours = builder.toString();
+//    }
+
 
     public String getFlavours() {
         return flavours;

@@ -6,6 +6,7 @@ import com.jazasoft.licensemanager.validation.Roles;
 import org.hibernate.validator.constraints.Email;
 import org.springframework.hateoas.core.Relation;
 
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
@@ -15,12 +16,15 @@ public class UserDto {
     private Long id;
 
     @Size(min = 3, max = 50)
-    private String name;
+    private String firstName;
 
-    @Pattern(regexp="^(?=.*[a-zA-Z])[a-zA-Z0-9_\\-\\.]{3,50}$")
+    @Size(min = 3, max = 50)
+    private String lastName;
+
+    @Pattern(regexp="^[a-zA-Z0-9_.-]{3,50}$")
     private String username;
 
-    @Pattern(regexp="^(?=.*[a-zA-Z])[a-zA-Z0-9_\\-@\\.]{5,40}$")
+    @Pattern(regexp = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$")
     private String email;
 
     @JsonIgnore
@@ -37,8 +41,9 @@ public class UserDto {
     public UserDto() {
     }
 
-    public UserDto(String name, String username, String email, String mobile,String roles) {
-        this.name = name;
+    public UserDto(String firstName, String lastName, String username, String email, String mobile,String roles) {
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.username = username;
         this.email = email;
         this.roles = roles;
@@ -53,12 +58,20 @@ public class UserDto {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getEmail() {
@@ -113,7 +126,7 @@ public class UserDto {
     public String toString() {
         return "UserDto{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
+                ", firstName='" + firstName + '\'' +
                 ", username='" + username + '\'' +
                 ", email='" + email + '\'' +
                 ", roles='" + roles + '\'' +

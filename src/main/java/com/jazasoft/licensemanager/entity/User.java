@@ -41,7 +41,7 @@ public class User extends Auditable<String> implements UserDetails{
     @Column(nullable = false)
     private String password;
 
-    @NotNull @Pattern(regexp="[0-9]{10}")
+    @Pattern(regexp="[0-9]{10}")
     private String mobile;
 
     @OneToOne(cascade = CascadeType.ALL)

@@ -124,7 +124,7 @@ public class ProductIntegrationTest {
                         .header("Authorization", "Bearer " + accessToken)
                 )
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$", hasSize(2)));
+                .andExpect(jsonPath("$", hasSize(3)));
 
         //Test each fields one by one
         product = new Product("", "test decription", "ANDON","EXPRESS");
@@ -149,6 +149,17 @@ public class ProductIntegrationTest {
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$", hasSize(1)))
                 .andExpect(jsonPath("$[0].field", is("productPrefix")));
+
+//        product = new Product("Md Zahid Raza", "test product", "TST","");
+//        this.mvc
+//                .perform(post(ApiUrls.ROOT_URL_PRODUCTS)
+//                        .content(mapper.writeValueAsString(product))
+//                        .contentType(MediaType.APPLICATION_JSON_UTF8)
+//                        .header("Authorization", "Bearer " + accessToken)
+//                )
+//                .andExpect(status().isBadRequest())
+//                .andExpect(jsonPath("$", hasSize(1)))
+//                .andExpect(jsonPath("$[0].field", is("flavours")));
 
     }
 
