@@ -17,29 +17,33 @@ import java.util.Set;
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Entity
-public class Client extends Auditable<String> {
+public class Company {
+
+    @Id
+    @Column(name = "company_id")
+    private Long id;
 
     @NotNull @Size(min = 3, max = 50)
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String name;
 
-    @NotNull @Pattern(regexp = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$")
-    @Column(nullable = false, unique = true)
-    private String email;
+    @NotNull @Size(min = 3, max = 50)
+    private String jobTitle;
+
+    @MapsId
+    @OneToOne(mappedBy = "company")
+    @JoinColumn(name = "company_id")
+    private User user;
 
     @NotNull @Valid
     @Embedded
     private Address address;
 
-    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<License> licenses = new HashSet<>();
-
-    public Client() {
+    public Company() {
     }
 
-    public Client(String name, String email) {
+    public Company(String name) {
         this.name = name;
-        this.email = email;
     }
 
     public String getName() {
@@ -58,19 +62,27 @@ public class Client extends Auditable<String> {
         this.address = address;
     }
 
-    public Set<License> getLicenses() {
-        return licenses;
+    public Long getId() {
+        return id;
     }
 
-    public void addLicense(License license) {
-        this.licenses.add(license);
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public String getEmail() {
-        return email;
+    public String getJobTitle() {
+        return jobTitle;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setJobTitle(String jobTitle) {
+        this.jobTitle = jobTitle;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

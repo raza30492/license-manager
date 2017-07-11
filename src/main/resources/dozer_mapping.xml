@@ -15,8 +15,8 @@
     </mapping>
 
     <mapping map-null="false">
-        <class-a>com.jazasoft.licensemanager.entity.Client</class-a>
-        <class-b>com.jazasoft.licensemanager.entity.Client</class-b>
+        <class-a>com.jazasoft.licensemanager.entity.Company</class-a>
+        <class-b>com.jazasoft.licensemanager.entity.Company</class-b>
     </mapping>
 
     <mapping map-null="false">

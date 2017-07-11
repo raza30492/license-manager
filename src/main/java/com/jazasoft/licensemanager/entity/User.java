@@ -40,11 +40,15 @@ public class User extends Auditable<String> implements UserDetails{
     @NotNull @Pattern(regexp="[0-9]{10}")
     private String mobile;
 
-    @JsonIgnore
-    private Integer retryCount;
+    @OneToOne(cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
+    private Company company;
 
     @JsonIgnore
     private String otp;
+
+    @JsonIgnore
+    private Integer retryCount;
 
     @JsonIgnore
     @Temporal(TemporalType.TIMESTAMP)
@@ -58,6 +62,9 @@ public class User extends Auditable<String> implements UserDetails{
 
     @NotNull @Roles(enumClass = Role.class)
     private String roles;
+
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<License> licenses = new HashSet<>();
 
     public User() {
     }
@@ -197,6 +204,22 @@ public class User extends Auditable<String> implements UserDetails{
 
     public void setRoles(String roles) {
         this.roles = roles;
+    }
+
+    public Company getCompany() {
+        return company;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
+    }
+
+    public Set<License> getLicenses() {
+        return licenses;
+    }
+
+    public void setLicenses(Set<License> licenses) {
+        this.licenses = licenses;
     }
 
     @Override

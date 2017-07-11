@@ -1,5 +1,7 @@
 package com.jazasoft.licensemanager.entity;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 import javax.persistence.Embeddable;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -12,33 +14,46 @@ import javax.validation.constraints.Size;
 public class Address {
 
     @NotNull @Size(min = 5,max = 100)
-    private String street;
+    private String line1;
+
+    private String line2;
 
     @NotNull @Size(min = 3,max = 50)
     private String city;
 
-    @NotNull @Pattern(regexp="[0-9]{6}")
-    private String zipCode;
+    @NotNull @Size(min = 3,max = 50)
+    private String state;
 
     @NotNull @Size(min = 3,max = 50)
     private String country;
 
+    @NotNull @Pattern(regexp="[0-9]{6}")
+    private String zipCode;
+
     public Address() {
     }
 
-    public Address(String street, String city, String zipCode, String country) {
-        this.street = street;
+    public Address(String line1, String city, String zipCode, String country) {
+        this.line1 = line1;
         this.city = city;
         this.zipCode = zipCode;
         this.country = country;
     }
 
-    public String getStreet() {
-        return street;
+    public String getLine1() {
+        return line1;
     }
 
-    public void setStreet(String street) {
-        this.street = street;
+    public void setLine1(String line1) {
+        this.line1 = line1;
+    }
+
+    public String getLine2() {
+        return line2;
+    }
+
+    public void setLine2(String line2) {
+        this.line2 = line2;
     }
 
     public String getCity() {
@@ -47,6 +62,14 @@ public class Address {
 
     public void setCity(String city) {
         this.city = city;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
     }
 
     public String getZipCode() {

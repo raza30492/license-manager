@@ -38,7 +38,7 @@ CREATE TABLE `product` (
   UNIQUE KEY `UK_jmivyxk9rmgysrmsqw15lqr5b` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-CREATE TABLE `client` (
+CREATE TABLE `company` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `created_at` datetime DEFAULT NULL,
   `created_by` varchar(255) DEFAULT NULL,
@@ -48,7 +48,7 @@ CREATE TABLE `client` (
   `modified_by` varchar(255) DEFAULT NULL,
   `city` varchar(255) DEFAULT NULL,
   `country` varchar(255) DEFAULT NULL,
-  `street` varchar(255) DEFAULT NULL,
+  `line1` varchar(255) DEFAULT NULL,
   `zip_code` varchar(255) DEFAULT NULL,
   `name` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
@@ -79,7 +79,7 @@ CREATE TABLE `license` (
   UNIQUE KEY `UK_LICENSE_PRODUCT_CODE` (`product_code`),
   KEY `FK8ulxglde1mgtan8kl7sbe2ro3` (`client_id`),
   KEY `FKcaxj7wyy1p2htf4n88cbtft6y` (`product_id`),
-  CONSTRAINT `FK8ulxglde1mgtan8kl7sbe2ro3` FOREIGN KEY (`client_id`) REFERENCES `client` (`id`),
+  CONSTRAINT `FK8ulxglde1mgtan8kl7sbe2ro3` FOREIGN KEY (`client_id`) REFERENCES `company` (`id`),
   CONSTRAINT `FKcaxj7wyy1p2htf4n88cbtft6y` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -133,7 +133,7 @@ create table if not exists oauth_code (
 --
 --create table if not exists oauth_approvals (
 --	userId VARCHAR(255),
---	clientId VARCHAR(255),
+--	userId VARCHAR(255),
 --	scope VARCHAR(255),
 --	status VARCHAR(10),
 --	expiresAt TIMESTAMP,

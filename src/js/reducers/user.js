@@ -20,13 +20,12 @@ const initialState = {
 
 const handlers = { 
   [c.USER_BUSY]: (_, action) => ({busy: true}),
-  [c.INITIALIZE_USER]: (_, action) => ({users: action.payload.resp.users, lastSync: action.payload.resp.lastSync, toggleStatus: !_.toggleStatus}),
+  [c.INITIALIZE_USER]: (_, action) => ({users: action.payload.users, lastSync: new Date().getTime(), toggleStatus: !_.toggleStatus}),
   [c.USER_SYNC_SUCCESS]: (_, action) => {
     let users = _.users;
-    const resp = action.payload.resp;
-    _.lastSync = resp.lastSync;
+    _.lastSync = new Date().getTime();
     let idx;
-    resp.users.forEach(user => {
+    action.payload.users.forEach(user => {
       idx = users.findIndex(i => i.id == user.id);
       if (idx == -1)  users.push(user);
       else users[idx] = user;

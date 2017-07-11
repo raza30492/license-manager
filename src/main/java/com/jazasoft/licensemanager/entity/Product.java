@@ -15,6 +15,7 @@ import java.util.Set;
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Entity
+@Table(indexes = @Index(name = "PRODUCT_IDX", columnList = "name"))
 public class Product extends Auditable<String> {
 
     @NotNull @Size(min = 3, max = 50)

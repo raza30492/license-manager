@@ -1,6 +1,6 @@
 package com.jazasoft.licensemanager.service;
 
-import com.jazasoft.licensemanager.entity.Client;
+import com.jazasoft.licensemanager.entity.Company;
 import com.jazasoft.licensemanager.respository.ClientRepository;
 import org.dozer.Mapper;
 import org.slf4j.Logger;
@@ -27,17 +27,17 @@ public class ClientService {
         this.mapper = mapper;
     }
 
-    public List<Client> findAll() {
+    public List<Company> findAll() {
         LOGGER.debug("findAll");
         return clientRepository.findAll();
     }
 
-    public Client findOne(Long id) {
+    public Company findOne(Long id) {
         LOGGER.debug("findOne: id = {}", id);
         return clientRepository.findOne(id);
     }
 
-    public Client findOneByName(String name) {
+    public Company findOneByName(String name) {
         LOGGER.debug("findOneByName: name = {}", name);
         return clientRepository.findOneByName(name);
     }
@@ -48,24 +48,23 @@ public class ClientService {
     }
 
     @Transactional
-    public Client save(Client client) {
+    public Company save(Company company) {
         LOGGER.debug("save");
-        return clientRepository.save(client);
+        return clientRepository.save(company);
     }
 
     @Transactional
-    public Client update(Client client) {
+    public Company update(Company company) {
         LOGGER.debug("update");
-        Client client2 = clientRepository.findOne(client.getId());
-        mapper.map(client,client2);
-        return client2;
+        Company company2 = clientRepository.findOne(company.getId());
+        mapper.map(company, company2);
+        return company2;
     }
 
     @Transactional
     public void delete(Long id) {
         LOGGER.debug("update");
-        Client client = clientRepository.findOne(id);
-        client.setEnabled(false);
+        Company company = clientRepository.findOne(id);
     }
 
 }

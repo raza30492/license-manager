@@ -6,7 +6,6 @@ import com.jazasoft.licensemanager.validation.FixedEnum;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -23,8 +22,8 @@ public class License extends Auditable<String>{
 
     @JsonIgnore
     @ManyToOne(optional = false)
-    @JoinColumn(name = "client_id")
-    private Client client;
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @NotNull
     @Transient
@@ -32,7 +31,7 @@ public class License extends Auditable<String>{
 
     @NotNull
     @Transient
-    private Long clientId;
+    private Long userId;
 
     @Column(nullable = false, unique = true)
     private String productCode;
@@ -65,19 +64,21 @@ public class License extends Auditable<String>{
     private Integer validity;   // -1: perpetual, n: Annual|Trial   [in number of days]
 
     @NotNull
-    private Long noOfUsers;  // Perpetual: Not applicable, Trial|Annual: No of active Users
+    private Long entitlement;  // Perpetual: Not applicable, Trial|Annual: No of active Users
+
+    private String entitlementType;
 
     public License() {
         super();
     }
 
-    public License(Long productId, Long clientId, String licenseType, String licenseFlavour, Integer validity, Long noOfUsers) {
+    public License(Long productId, Long userId, String licenseType, String licenseFlavour, Integer validity, Long entitlement) {
         this.productId = productId;
-        this.clientId = clientId;
+        this.userId = userId;
         this.licenseType = licenseType;
         this.licenseFlavour = licenseFlavour;
         this.validity = validity;
-        this.noOfUsers = noOfUsers;
+        this.entitlement = entitlement;
     }
 
     public Product getProduct() {
@@ -88,12 +89,12 @@ public class License extends Auditable<String>{
         this.product = product;
     }
 
-    public Client getClient() {
-        return client;
+    public User getUser() {
+        return user;
     }
 
-    public void setClient(Client client) {
-        this.client = client;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public String getProductCode() {
@@ -152,12 +153,12 @@ public class License extends Auditable<String>{
         this.licenseType = licenseType;
     }
 
-    public Long getNoOfUsers() {
-        return noOfUsers;
+    public Long getEntitlement() {
+        return entitlement;
     }
 
-    public void setNoOfUsers(Long noOfUsers) {
-        this.noOfUsers = noOfUsers;
+    public void setEntitlement(Long entitlement) {
+        this.entitlement = entitlement;
     }
 
     public Date getActivatedOn() {
@@ -176,12 +177,12 @@ public class License extends Auditable<String>{
         this.productId = productId;
     }
 
-    public Long getClientId() {
-        return clientId;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setClientId(Long clientId) {
-        this.clientId = clientId;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public String getLicenseFlavour() {
@@ -190,5 +191,13 @@ public class License extends Auditable<String>{
 
     public void setLicenseFlavour(String licenseFlavour) {
         this.licenseFlavour = licenseFlavour;
+    }
+
+    public String getEntitlementType() {
+        return entitlementType;
+    }
+
+    public void setEntitlementType(String entitlementType) {
+        this.entitlementType = entitlementType;
     }
 }

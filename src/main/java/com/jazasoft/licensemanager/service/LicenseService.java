@@ -1,6 +1,6 @@
 package com.jazasoft.licensemanager.service;
 
-import com.jazasoft.licensemanager.entity.Client;
+import com.jazasoft.licensemanager.entity.Company;
 import com.jazasoft.licensemanager.entity.License;
 import com.jazasoft.licensemanager.entity.Product;
 import com.jazasoft.licensemanager.respository.ClientRepository;
@@ -63,9 +63,8 @@ public class LicenseService {
     public License save(License license) {
         LOGGER.debug("save");
         Product product = productRepository.findOne(license.getProductId());
-        Client client = clientRepository.findOne(license.getClientId());
+        Company company = clientRepository.findOne(license.getUserId());
         license.setProduct(product);
-        license.setClient(client);
         license.setProductCode(product.getProductPrefix() + Utils.getRandomNumber(7));
         StringBuilder builder = new StringBuilder();
         for (int i = 0; i < 4; i++) {

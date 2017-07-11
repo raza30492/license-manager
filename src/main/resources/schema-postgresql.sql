@@ -42,20 +42,20 @@ CREATE TABLE users (
     id bigint NOT NULL,
     created_at timestamp without time zone,
     created_by character varying(255),
-    enabled boolean,
+    enabled boolean NOT NULL,
     modified_at timestamp without time zone,
     modified_by character varying(255),
     account_expired boolean NOT NULL,
     account_locked boolean NOT NULL,
     credential_expired boolean NOT NULL,
     email character varying(255) NOT NULL,
-    mobile character varying(255),
-    name character varying(255) NOT NULL,
+    mobile character varying(255) NOT NULL,
+    name character varying(50) NOT NULL,
     otp character varying(255),
     otp_sent_at timestamp without time zone,
     password character varying(255) NOT NULL,
     retry_count integer,
-    roles character varying(255),
+    roles character varying(255) NOT NULL,
     username character varying(255) NOT NULL
 );
 
@@ -96,7 +96,6 @@ ALTER TABLE ONLY users ALTER COLUMN id SET DEFAULT nextval('users_id_seq'::regcl
 
 SELECT pg_catalog.setval('users_id_seq', 1, true);
 
-
 --
 -- Name: users uk_6dotkott2kjsp8vw4d0m25fb7; Type: CONSTRAINT; Schema: public; Owner: mdzahidraza
 --
@@ -127,6 +126,212 @@ ALTER TABLE ONLY users
 
 CREATE INDEX idx7516795akd6qg7e0i8e5rv58s ON users USING btree (name, email, username);
 
+----------------
+
+
+--
+-- Name: company; Type: TABLE; Schema: public; Owner: mdzahidraza
+--
+
+CREATE TABLE company (
+    company_id bigint NOT NULL,
+    city character varying(50) NOT NULL,
+    country character varying(50) NOT NULL,
+    line1 character varying(100) NOT NULL,
+    line2 character varying(255),
+    state character varying(50) NOT NULL,
+    zip_code character varying(255) NOT NULL,
+    job_title character varying(50) NOT NULL,
+    name character varying(50) NOT NULL
+);
+
+
+ALTER TABLE company OWNER TO mdzahidraza;
+
+
+--
+-- Name: company company_pkey; Type: CONSTRAINT; Schema: public; Owner: mdzahidraza
+--
+
+ALTER TABLE ONLY company
+    ADD CONSTRAINT company_pkey PRIMARY KEY (company_id);
+
+----------------
+
+
+--
+-- Name: product; Type: TABLE; Schema: public; Owner: mdzahidraza
+--
+
+CREATE TABLE product (
+    id bigint NOT NULL,
+    created_at timestamp without time zone,
+    created_by character varying(255),
+    enabled boolean NOT NULL,
+    modified_at timestamp without time zone,
+    modified_by character varying(255),
+    description character varying(255),
+    name character varying(50) NOT NULL,
+    product_prefix character varying(5) NOT NULL
+);
+
+
+ALTER TABLE product OWNER TO mdzahidraza;
+
+--
+-- Name: product_id_seq; Type: SEQUENCE; Schema: public; Owner: mdzahidraza
+--
+
+CREATE SEQUENCE product_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE product_id_seq OWNER TO mdzahidraza;
+
+--
+-- Name: product_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: mdzahidraza
+--
+
+ALTER SEQUENCE product_id_seq OWNED BY product.id;
+
+--
+-- Name: product id; Type: DEFAULT; Schema: public; Owner: mdzahidraza
+--
+
+ALTER TABLE ONLY product ALTER COLUMN id SET DEFAULT nextval('product_id_seq'::regclass);
+
+
+--
+-- Name: product_id_seq; Type: SEQUENCE SET; Schema: public; Owner: mdzahidraza
+--
+
+SELECT pg_catalog.setval('product_id_seq', 1, false);
+
+--
+-- Name: product product_pkey; Type: CONSTRAINT; Schema: public; Owner: mdzahidraza
+--
+
+ALTER TABLE ONLY product
+    ADD CONSTRAINT product_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: product uk_jmivyxk9rmgysrmsqw15lqr5b; Type: CONSTRAINT; Schema: public; Owner: mdzahidraza
+--
+
+ALTER TABLE ONLY product
+    ADD CONSTRAINT uk_jmivyxk9rmgysrmsqw15lqr5b UNIQUE (name);
+
+
+--
+-- Name: PRODUCT_IDX; Type: INDEX; Schema: public; Owner: mdzahidraza
+--
+
+CREATE INDEX PRODUCT_IDX ON product USING btree (name);
+
+---------------------
+
+
+--
+-- Name: license; Type: TABLE; Schema: public; Owner: mdzahidraza
+--
+
+CREATE TABLE license (
+    id bigint NOT NULL,
+    created_at timestamp without time zone,
+    created_by character varying(255),
+    enabled boolean NOT NULL,
+    entitlement bigint NOT NULL,
+    entitlement_type character varying(255),
+    modified_at timestamp without time zone,
+    modified_by character varying(255),
+    activated boolean NOT NULL,
+    activated_on date,
+    license_flavour character varying(255) NOT NULL,
+    license_type character varying(255) NOT NULL,
+    mac_id character varying(255),
+    product_code character varying(255) NOT NULL,
+    product_key character varying(255) NOT NULL,
+    purchased_on date NOT NULL,
+    validity integer NOT NULL,
+    product_id bigint NOT NULL,
+    user_id bigint NOT NULL
+);
+
+
+ALTER TABLE license OWNER TO mdzahidraza;
+
+--
+-- Name: license_id_seq; Type: SEQUENCE; Schema: public; Owner: mdzahidraza
+--
+
+CREATE SEQUENCE license_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE license_id_seq OWNER TO mdzahidraza;
+
+--
+-- Name: license_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: mdzahidraza
+--
+
+ALTER SEQUENCE license_id_seq OWNED BY license.id;
+
+
+--
+-- Name: license id; Type: DEFAULT; Schema: public; Owner: mdzahidraza
+--
+
+ALTER TABLE ONLY license ALTER COLUMN id SET DEFAULT nextval('license_id_seq'::regclass);
+
+
+--
+-- Name: license_id_seq; Type: SEQUENCE SET; Schema: public; Owner: mdzahidraza
+--
+
+SELECT pg_catalog.setval('license_id_seq', 1, false);
+
+
+--
+-- Name: license license_pkey; Type: CONSTRAINT; Schema: public; Owner: mdzahidraza
+--
+
+ALTER TABLE ONLY license
+    ADD CONSTRAINT license_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: license uk_b4k4nfccphswnfepy4ea2m06w; Type: CONSTRAINT; Schema: public; Owner: mdzahidraza
+--
+
+ALTER TABLE ONLY license
+    ADD CONSTRAINT uk_b4k4nfccphswnfepy4ea2m06w UNIQUE (product_code);
+
+
+--
+-- Name: license fkcaxj7wyy1p2htf4n88cbtft6y; Type: FK CONSTRAINT; Schema: public; Owner: mdzahidraza
+--
+
+ALTER TABLE ONLY license
+    ADD CONSTRAINT fkcaxj7wyy1p2htf4n88cbtft6y FOREIGN KEY (product_id) REFERENCES product(id);
+
+
+--
+-- Name: license fkkur8ykl6c4jg32f7mp12mhr8m; Type: FK CONSTRAINT; Schema: public; Owner: mdzahidraza
+--
+
+ALTER TABLE ONLY license
+    ADD CONSTRAINT fkkur8ykl6c4jg32f7mp12mhr8m FOREIGN KEY (user_id) REFERENCES users(id);
+
+-------------------------
 
 --
 -- PostgreSQL database dump complete

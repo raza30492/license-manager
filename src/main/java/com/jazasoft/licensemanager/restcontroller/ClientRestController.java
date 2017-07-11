@@ -2,7 +2,7 @@ package com.jazasoft.licensemanager.restcontroller;
 
 import com.jazasoft.licensemanager.ApiUrls;
 import com.jazasoft.licensemanager.assembler.ClientAssembler;
-import com.jazasoft.licensemanager.entity.Client;
+import com.jazasoft.licensemanager.entity.Company;
 import com.jazasoft.licensemanager.service.ClientService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,48 +38,48 @@ public class ClientRestController {
     @GetMapping
     public ResponseEntity<?> listAllClients() {
         LOGGER.debug("listAllClients()");
-        List<Client> clients = clientService.findAll();
-        Resources resources = new Resources(clientAssembler.toResources(clients), linkTo(ClientRestController.class).withSelfRel());
+        List<Company> companies = clientService.findAll();
+        Resources resources = new Resources(clientAssembler.toResources(companies), linkTo(ClientRestController.class).withSelfRel());
         return new ResponseEntity<>(resources, HttpStatus.OK);
     }
 
     @GetMapping(ApiUrls.URL_CLIENTS_CLIENT)
     public ResponseEntity<?> getClient(@PathVariable("clientId") long id) {
         LOGGER.debug("getClient(): id = {}",id);
-        Client client = clientService.findOne(id);
-        if (client == null) {
+        Company company = clientService.findOne(id);
+        if (company == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(clientAssembler.toResource(client), HttpStatus.OK);
+        return new ResponseEntity<>(clientAssembler.toResource(company), HttpStatus.OK);
     }
 
     @GetMapping(ApiUrls.URL_CLIENTS_CLIENT_SEARCH_BY_NAME)
     public ResponseEntity<?> searchByName(@RequestParam("name") String name){
         LOGGER.debug("searchByName(): name = {}",name);
-        Client client = clientService.findOneByName(name);
-        if (client == null) {
+        Company company = clientService.findOneByName(name);
+        if (company == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(clientAssembler.toResource(client), HttpStatus.OK);
+        return new ResponseEntity<>(clientAssembler.toResource(company), HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<Void> createClient(@Valid @RequestBody Client client) {
-        LOGGER.debug("createClient():\n {}", client.toString());
-        client = clientService.save(client);
-        Link selfLink = linkTo(ClientRestController.class).slash(client.getId()).withSelfRel();
+    public ResponseEntity<Void> createClient(@Valid @RequestBody Company company) {
+        LOGGER.debug("createClient():\n {}", company.toString());
+        company = clientService.save(company);
+        Link selfLink = linkTo(ClientRestController.class).slash(company.getId()).withSelfRel();
         return ResponseEntity.created(URI.create(selfLink.getHref())).build();
     }
 
     @PutMapping(ApiUrls.URL_CLIENTS_CLIENT)
-    public ResponseEntity<?> updateClient(@PathVariable("clientId") long id,@Validated @RequestBody Client client) {
-        LOGGER.debug("updateClient(): id = {} \n {}",id,client);
+    public ResponseEntity<?> updateClient(@PathVariable("clientId") long id,@Validated @RequestBody Company company) {
+        LOGGER.debug("updateClient(): id = {} \n {}",id, company);
         if (!clientService.exists(id)) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        client.setId(id);
-        client = clientService.update(client);
-        return new ResponseEntity<>(clientAssembler.toResource(client), HttpStatus.OK);
+        company.setId(id);
+        company = clientService.update(company);
+        return new ResponseEntity<>(clientAssembler.toResource(company), HttpStatus.OK);
     }
 
     @DeleteMapping(ApiUrls.URL_CLIENTS_CLIENT)

@@ -21,7 +21,7 @@ export function initialize () {
       axios.get(window.serviceHost + '/users', {headers: getHeaders()})
     ])
     .then(axios.spread(function (users) {
-      dispatch({type: u.INITIALIZE_USER, payload: { resp: users.data.content}});
+      dispatch({type: u.INITIALIZE_USER, payload: { users: users.data._embedded.users}});
       dispatch({type: m.STORE_INITIALIZED});
 
     }))
