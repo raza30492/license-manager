@@ -1,4 +1,4 @@
-package com.jazasoft.licensemanager.entity;
+package com.jazasoft.licensemanager;
 
 /**
  * Created by mdzahidraza on 11/07/17.

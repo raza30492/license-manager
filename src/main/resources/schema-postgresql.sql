@@ -50,7 +50,8 @@ CREATE TABLE users (
     credential_expired boolean NOT NULL,
     email character varying(255) NOT NULL,
     mobile character varying(255) NOT NULL,
-    name character varying(50) NOT NULL,
+    first_name character varying(50) NOT NULL,
+    last_name character varying(50) NOT NULL,
     otp character varying(255),
     otp_sent_at timestamp without time zone,
     password character varying(255) NOT NULL,
@@ -124,7 +125,7 @@ ALTER TABLE ONLY users
 -- Name: idx7516795akd6qg7e0i8e5rv58s; Type: INDEX; Schema: public; Owner: mdzahidraza
 --
 
-CREATE INDEX idx7516795akd6qg7e0i8e5rv58s ON users USING btree (name, email, username);
+CREATE INDEX idx7516795akd6qg7e0i8e5rv58s ON users USING btree (email, username);
 
 ----------------
 

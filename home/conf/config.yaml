@@ -1,0 +1,5 @@
+product:
+  flavours:
+    - flavour: EXPRESS
+    - flavour: PREMIUM
+    - flavour: ULTIMATE

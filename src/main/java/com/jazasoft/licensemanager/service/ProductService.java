@@ -1,13 +1,17 @@
 package com.jazasoft.licensemanager.service;
 
+import com.jazasoft.licensemanager.Constants;
 import com.jazasoft.licensemanager.entity.Product;
 import com.jazasoft.licensemanager.respository.ProductRepository;
+import com.jazasoft.licensemanager.util.YamlUtils;
 import org.dozer.Mapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -60,4 +64,15 @@ public class ProductService {
         mapper.map(product,product2);
         return product2;
     }
+
+    public List<String> getProductFlavours() {
+        List<String> result = null;
+        try {
+            result = (List<String>) YamlUtils.getINSTANCE().getConfProperty(Constants.PRODUCT_FLAVOURS);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
 }
+

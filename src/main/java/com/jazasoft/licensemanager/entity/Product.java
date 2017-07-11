@@ -28,16 +28,20 @@ public class Product extends Auditable<String> {
     @Column(nullable = false)
     private String productPrefix;
 
+    @NotNull
+    private String flavours;
+
     @OneToMany(mappedBy = "product")
     Set<License> licenses = new HashSet<>();
 
     public Product() {
     }
 
-    public Product(String name, String description, String productPrefix) {
+    public Product(String name, String description, String productPrefix, String flavours) {
         this.name = name;
         this.description = description;
         this.productPrefix = productPrefix;
+        this.flavours = flavours;
     }
 
     public String getName() {
@@ -72,6 +76,14 @@ public class Product extends Auditable<String> {
         this.licenses = licenses;
     }
 
+    public String getFlavours() {
+        return flavours;
+    }
+
+    public void setFlavours(String flavours) {
+        this.flavours = flavours;
+    }
+
     @Override
     public String toString() {
         return "Product{" +
@@ -81,3 +93,4 @@ public class Product extends Auditable<String> {
                 '}';
     }
 }
+

@@ -50,15 +50,15 @@ public class UserRestController{
         return new ResponseEntity<>(userAssembler.toResource(user), HttpStatus.OK);
     }
 
-    @GetMapping(ApiUrls.URL_USERS_USER_SEARCH_BY_NAME)
-    public ResponseEntity<?> searchByName(@RequestParam("name") String name){
-        logger.debug("searchByName(): name = {}",name);
-        User user = userService.findByName(name);
-        if (user == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(userAssembler.toResource(user), HttpStatus.OK);
-    }
+//    @GetMapping(ApiUrls.URL_USERS_USER_SEARCH_BY_NAME)
+//    public ResponseEntity<?> searchByName(@RequestParam("name") String name){
+//        logger.debug("searchByName(): name = {}",name);
+//        User user = userService.findByName(name);
+//        if (user == null) {
+//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//        }
+//        return new ResponseEntity<>(userAssembler.toResource(user), HttpStatus.OK);
+//    }
 
     @GetMapping(ApiUrls.URL_USERS_USER_SEARCH_BY_EMAIL)
     public ResponseEntity<?> searchByEmail(@RequestParam("email") String email){

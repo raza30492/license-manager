@@ -72,10 +72,10 @@ public class MyUserDetailsService implements UserDetailsService {
         return userRepository.findByEmail(email);
     }
 
-    public User findByName(String name) {
-        LOGGER.debug("findByName(): name = " , name);
-        return userRepository.findByName(name);
-    }
+//    public User findByName(String name) {
+//        LOGGER.debug("findByName(): name = " , name);
+//        return userRepository.findByName(name);
+//    }
 
     public User findByUsername(String username) {
         LOGGER.debug("findByUsername(): username = " , username);

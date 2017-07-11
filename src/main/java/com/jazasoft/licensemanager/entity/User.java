@@ -16,14 +16,18 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Entity
-@Table(name = "users", indexes = @Index(columnList = "name,email,username"))
+@Table(name = "users", indexes = @Index(columnList = "email,username"))
 public class User extends Auditable<String> implements UserDetails{
 
     private static final long serialVersionUID = 8541623741428134463L;
 
     @NotNull @Size(min = 3, max = 50)
     @Column(nullable = false)
-    private String name;
+    private String firstName;
+
+    @NotNull @Size(min = 3, max = 50)
+    @Column(nullable = false)
+    private String lastName;
 
     @NotNull @Pattern(regexp="^[a-zA-Z0-9_.-]{3,50}$")
     @Column(nullable = false, unique = true)
@@ -69,9 +73,9 @@ public class User extends Auditable<String> implements UserDetails{
     public User() {
     }
 
-    public User(String name, String username, String email, String password, String mobile,boolean enabled, boolean accountExpired, boolean accountLocked, boolean credentialExpired) {
+    public User(String firstName, String username, String email, String password, String mobile,boolean enabled, boolean accountExpired, boolean accountLocked, boolean credentialExpired) {
         super(enabled);
-        this.name = name;
+        this.firstName = firstName;
         this.username = username;
         this.email = email;
         setPassword(password);
@@ -81,8 +85,8 @@ public class User extends Auditable<String> implements UserDetails{
         this.credentialExpired = credentialExpired;
     }
 
-    public User(String name, String username, String email, String mobile, String roles) {
-        this.name = name;
+    public User(String firstName, String username, String email, String mobile, String roles) {
+        this.firstName = firstName;
         this.username = username;
         this.email = email;
         this.mobile = mobile;
@@ -120,12 +124,20 @@ public class User extends Auditable<String> implements UserDetails{
         return enabled;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getEmail() {
@@ -226,7 +238,7 @@ public class User extends Auditable<String> implements UserDetails{
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
+                ", firstName='" + firstName + '\'' +
                 ", username='" + username + '\'' +
                 ", email='" + email + '\'' +
                 ", mobile='" + mobile + '\'' +

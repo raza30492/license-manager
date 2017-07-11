@@ -2,6 +2,8 @@ package com.jazasoft.licensemanager.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.jazasoft.licensemanager.LicenseFlavour;
+import com.jazasoft.licensemanager.LicenseType;
 import com.jazasoft.licensemanager.validation.FixedEnum;
 
 import javax.persistence.*;
@@ -201,3 +203,4 @@ public class License extends Auditable<String>{
         this.entitlementType = entitlementType;
     }
 }
+

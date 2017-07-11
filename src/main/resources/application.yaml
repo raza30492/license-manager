@@ -9,7 +9,7 @@ spring:
     password: zahid
     platform: postgresql
     initialize: true
-    continue-on-error: false
+    continue-on-error: true
     ### MySQL configuration ###
 #    url: jdbc:mysql://localhost:3306/license_manager?createDatabaseIfNotExist=true
 #    username: root

@@ -91,7 +91,7 @@ public class ProductIntegrationTest {
 
     @Test
     public void createAndDeleteProduct() throws Exception {
-        Product product = new Product("Test Product", "test description", "TST");
+        Product product = new Product("Test Product", "test description", "TST","EXPRESS,PREMIUM,ULTIMATE");
         System.out.println("-$$$-" + mapper.writeValueAsString(product));
         MvcResult mvcResult = mvc
                 .perform(post(ApiUrls.ROOT_URL_PRODUCTS)
@@ -127,7 +127,7 @@ public class ProductIntegrationTest {
                 .andExpect(jsonPath("$", hasSize(2)));
 
         //Test each fields one by one
-        product = new Product("", "test decription", "ANDON");
+        product = new Product("", "test decription", "ANDON","EXPRESS");
         this.mvc
                 .perform(post(ApiUrls.ROOT_URL_PRODUCTS)
                         .content(mapper.writeValueAsString(product))
@@ -139,7 +139,7 @@ public class ProductIntegrationTest {
                 .andExpect(jsonPath("$[0].field", is("name")))
                 .andExpect(jsonPath("$[0].message", containsString("length must be between 3")));
 
-        product = new Product("Md Zahid Raza", "test product", "");
+        product = new Product("Md Zahid Raza", "test product", "","EXPRESS");
         this.mvc
                 .perform(post(ApiUrls.ROOT_URL_PRODUCTS)
                         .content(mapper.writeValueAsString(product))

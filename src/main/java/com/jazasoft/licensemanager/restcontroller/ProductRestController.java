@@ -26,9 +26,9 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 @RestController
 @RequestMapping(ApiUrls.ROOT_URL_PRODUCTS)
 public class ProductRestController {
-    
+
     private final Logger LOGGER = LoggerFactory.getLogger(ProductRestController.class);
-    
+
     @Autowired
     private ProductService productService;
 
@@ -41,6 +41,12 @@ public class ProductRestController {
         List<Product> products = productService.findAll();
         Resources resources = new Resources(productAssembler.toResources(products), linkTo(ProductRestController.class).withSelfRel());
         return new ResponseEntity<>(resources, HttpStatus.OK);
+    }
+
+    public ResponseEntity<?> getProductFlavours() {
+        LOGGER.debug("getProductFalvours");
+        List<String> flavours = productService.getProductFlavours();
+        return ResponseEntity.ok(flavours);
     }
 
     @GetMapping(ApiUrls.URL_PRODUCTS_PRODUCT)
@@ -82,3 +88,4 @@ public class ProductRestController {
         return new ResponseEntity<>(productAssembler.toResource(product), HttpStatus.OK);
     }
 }
+
