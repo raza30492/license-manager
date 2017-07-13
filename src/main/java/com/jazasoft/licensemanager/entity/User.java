@@ -45,7 +45,7 @@ public class User extends Auditable<String> implements UserDetails{
     private String mobile;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @PrimaryKeyJoinColumn
+//    @PrimaryKeyJoinColumn
     private Company company;
 
     @JsonIgnore
@@ -238,12 +238,19 @@ public class User extends Auditable<String> implements UserDetails{
     public String toString() {
         return "User{" +
                 "id=" + id +
+                ", createdAt=" + createdAt +
+                ", modifiedAt=" + modifiedAt +
+                ", createdBy=" + createdBy +
+                ", modifiedBy=" + modifiedBy +
                 ", firstName='" + firstName + '\'' +
+                ", enabled=" + enabled +
+                ", lastName='" + lastName + '\'' +
                 ", username='" + username + '\'' +
                 ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
                 ", mobile='" + mobile + '\'' +
-                ", retryCount=" + retryCount +
                 ", otp='" + otp + '\'' +
+                ", retryCount=" + retryCount +
                 ", otpSentAt=" + otpSentAt +
                 ", accountExpired=" + accountExpired +
                 ", accountLocked=" + accountLocked +

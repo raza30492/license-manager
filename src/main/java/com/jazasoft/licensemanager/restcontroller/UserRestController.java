@@ -3,6 +3,7 @@ package com.jazasoft.licensemanager.restcontroller;
 import com.jazasoft.licensemanager.ApiUrls;
 import com.jazasoft.licensemanager.assembler.UserAssembler;
 import com.jazasoft.licensemanager.dto.UserDto;
+import com.jazasoft.licensemanager.entity.Company;
 import com.jazasoft.licensemanager.entity.User;
 import com.jazasoft.licensemanager.service.MyUserDetailsService;
 import org.slf4j.Logger;
@@ -33,16 +34,16 @@ public class UserRestController{
     @Autowired UserAssembler userAssembler;
     
     @GetMapping
-    public ResponseEntity<?> listAllUsers(@RequestParam(value = "after", defaultValue = "0") Long after) {
-        logger.debug("listAllUsers()");
+    public ResponseEntity<?> findAllUsers(@RequestParam(value = "after", defaultValue = "0") Long after) {
+        logger.debug("findAllUsers()");
         List<User> users = userService.findAllAfter(after);
         Resources resources = new Resources(userAssembler.toResources(users), linkTo(UserRestController.class).withSelfRel());
         return new ResponseEntity<>(resources, HttpStatus.OK);
     }
   
     @GetMapping(ApiUrls.URL_USERS_USER)
-    public ResponseEntity<?> getUser(@PathVariable("userId") long id) {
-        logger.debug("getUser(): id = {}",id);
+    public ResponseEntity<?> findOneUser(@PathVariable("userId") long id) {
+        logger.debug("findOneUser(): id = {}",id);
         User user = userService.findOne(id);
         if (user == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -50,18 +51,8 @@ public class UserRestController{
         return new ResponseEntity<>(userAssembler.toResource(user), HttpStatus.OK);
     }
 
-//    @GetMapping(ApiUrls.URL_USERS_USER_SEARCH_BY_NAME)
-//    public ResponseEntity<?> searchByName(@RequestParam("name") String name){
-//        logger.debug("searchByName(): name = {}",name);
-//        User user = userService.findByName(name);
-//        if (user == null) {
-//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//        }
-//        return new ResponseEntity<>(userAssembler.toResource(user), HttpStatus.OK);
-//    }
-
     @GetMapping(ApiUrls.URL_USERS_USER_SEARCH_BY_EMAIL)
-    public ResponseEntity<?> searchByEmail(@RequestParam("email") String email){
+    public ResponseEntity<?> searchUserByEmail(@RequestParam("email") String email){
         logger.debug("searchByName(): name = {}",email);
         User user = userService.findByEmail(email);
         if (user == null) {
@@ -71,11 +62,18 @@ public class UserRestController{
     }
    
     @PostMapping
-    public ResponseEntity<Void> createUser(@Valid @RequestBody User user) {
-        logger.debug("createUser():\n {}", user.toString());
+    public ResponseEntity<Void> saveUser(@Valid @RequestBody User user) {
+        logger.debug("saveUser():");
         user = userService.save(user);
         Link selfLink = linkTo(UserRestController.class).slash(user.getId()).withSelfRel();
         return ResponseEntity.created(URI.create(selfLink.getHref())).build();
+    }
+
+    @PutMapping(ApiUrls.URL_USERS_USER_COMPANY)
+    public ResponseEntity<?> saveUserCompany(@PathVariable("userId") Long userId, @Valid @RequestBody Company company){
+        logger.debug("saveUserCompany: userId = {}", userId);
+        User user = userService.saveUserCompany(userId, company);
+        return new ResponseEntity<Object>(userAssembler.toResource(user), HttpStatus.OK);
     }
  
     @PatchMapping(ApiUrls.URL_USERS_USER)

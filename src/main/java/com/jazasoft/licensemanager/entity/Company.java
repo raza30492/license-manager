@@ -1,5 +1,6 @@
 package com.jazasoft.licensemanager.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import org.hibernate.validator.constraints.Email;
 
@@ -30,16 +31,23 @@ public class Company {
     @NotNull @Size(min = 3, max = 50)
     private String jobTitle;
 
+    @JsonIgnore
     @MapsId
     @OneToOne(mappedBy = "company")
     @JoinColumn(name = "company_id")
     private User user;
 
-    @NotNull @Valid
+    @NotNull
+    @Valid
     @Embedded
     private Address address;
 
     public Company() {
+    }
+
+    public Company(String name, String jobTitle) {
+        this.name = name;
+        this.jobTitle = jobTitle;
     }
 
     public Company(String name) {
@@ -84,5 +92,15 @@ public class Company {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    @Override
+    public String toString() {
+        return "Company{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", jobTitle='" + jobTitle + '\'' +
+                ", address=" + address +
+                '}';
     }
 }

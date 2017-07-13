@@ -8,4 +8,9 @@
         <class-a>com.jazasoft.licensemanager.dto.UserDto</class-a>
         <class-b>com.jazasoft.licensemanager.entity.User</class-b>
     </mapping>
+
+    <mapping map-null="false">
+        <class-a>com.jazasoft.licensemanager.entity.Company</class-a>
+        <class-b>com.jazasoft.licensemanager.entity.Company</class-b>
+    </mapping>
 </mappings>

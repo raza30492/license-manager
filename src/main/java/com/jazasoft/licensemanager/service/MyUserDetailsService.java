@@ -1,6 +1,7 @@
 package com.jazasoft.licensemanager.service;
 
 import com.jazasoft.licensemanager.dto.UserDto;
+import com.jazasoft.licensemanager.entity.Company;
 import com.jazasoft.licensemanager.entity.User;
 import com.jazasoft.licensemanager.respository.UserRepository;
 import org.dozer.Mapper;
@@ -115,5 +116,18 @@ public class MyUserDetailsService implements UserDetailsService {
         LOGGER.debug("delete(): id = {}",id);
         User user = userRepository.findOne(id);
         user.setEnabled(false);
+    }
+
+    @Transactional
+    public User saveUserCompany(Long userId, Company company) {
+        LOGGER.debug("saveUserCompany: userId = {}", userId);
+        User user = userRepository.findOne(userId);
+        if (user.getCompany() == null){
+            user.setCompany(company);
+        }else {
+            mapper.map(company, user.getCompany());
+        }
+        company.setUser(user);
+        return user;
     }
 }

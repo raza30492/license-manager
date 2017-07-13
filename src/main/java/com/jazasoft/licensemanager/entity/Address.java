@@ -33,6 +33,15 @@ public class Address {
     public Address() {
     }
 
+    public Address(String line1, String line2, String city, String state, String country, String zipCode) {
+        this.line1 = line1;
+        this.line2 = line2;
+        this.city = city;
+        this.state = state;
+        this.country = country;
+        this.zipCode = zipCode;
+    }
+
     public Address(String line1, String city, String zipCode, String country) {
         this.line1 = line1;
         this.city = city;
@@ -86,5 +95,17 @@ public class Address {
 
     public void setCountry(String country) {
         this.country = country;
+    }
+
+    @Override
+    public String toString() {
+        return "Address{" +
+                "line1='" + line1 + '\'' +
+                ", line2='" + line2 + '\'' +
+                ", city='" + city + '\'' +
+                ", state='" + state + '\'' +
+                ", country='" + country + '\'' +
+                ", zipCode='" + zipCode + '\'' +
+                '}';
     }
 }
