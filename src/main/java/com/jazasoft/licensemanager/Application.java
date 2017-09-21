@@ -45,7 +45,7 @@ public class Application extends SpringBootServletInitializer {
     CommandLineRunner init(MyUserDetailsService userService) {
         return (args) -> {
             if(userService.count() == 0){
-                User user = new User("Md Zahid Raza","zahid7292","zahid7292@gmail.com","admin","8987525008",true,false,false,false);
+                User user = new User("Md Zahid","Raza","zahid7292","zahid7292@gmail.com","admin","8987525008",true,false,false,false);
                 user.setRoles("ROLE_ADMIN");
                 userService.save(user);
                 //userService.save(new UserDto("Md Zahid Raza","zahid7292","zahid7292@gmail.com","ROLE_ADMIN","8987525008"));

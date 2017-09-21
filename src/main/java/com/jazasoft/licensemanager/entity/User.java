@@ -44,8 +44,8 @@ public class User extends Auditable<String> implements UserDetails{
     @Pattern(regexp="[0-9]{10}")
     private String mobile;
 
-    @OneToOne(cascade = CascadeType.ALL)
-//    @PrimaryKeyJoinColumn
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    @JoinColumn(name = "company_id")
     private Company company;
 
     @JsonIgnore
@@ -73,9 +73,10 @@ public class User extends Auditable<String> implements UserDetails{
     public User() {
     }
 
-    public User(String firstName, String username, String email, String password, String mobile,boolean enabled, boolean accountExpired, boolean accountLocked, boolean credentialExpired) {
+    public User(String firstName, String lastName, String username, String email, String password, String mobile,boolean enabled, boolean accountExpired, boolean accountLocked, boolean credentialExpired) {
         super(enabled);
         this.firstName = firstName;
+        this.lastName = lastName;
         this.username = username;
         this.email = email;
         setPassword(password);

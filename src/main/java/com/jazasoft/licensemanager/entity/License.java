@@ -2,6 +2,7 @@ package com.jazasoft.licensemanager.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.jazasoft.licensemanager.EntitlementType;
 import com.jazasoft.licensemanager.LicenseFlavour;
 import com.jazasoft.licensemanager.LicenseType;
 import com.jazasoft.licensemanager.validation.FixedEnum;
@@ -68,6 +69,7 @@ public class License extends Auditable<String>{
     @NotNull
     private Long entitlement;  // Perpetual: Not applicable, Trial|Annual: No of active Users
 
+    @NotNull @FixedEnum(enumClass = EntitlementType.class)
     private String entitlementType;
 
     public License() {

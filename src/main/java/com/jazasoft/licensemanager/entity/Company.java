@@ -20,8 +20,7 @@ import java.util.Set;
 @Entity
 public class Company {
 
-    @Id
-    @Column(name = "company_id")
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotNull @Size(min = 3, max = 50)
@@ -32,9 +31,9 @@ public class Company {
     private String jobTitle;
 
     @JsonIgnore
-    @MapsId
+    //@MapsId
     @OneToOne(mappedBy = "company")
-    @JoinColumn(name = "company_id")
+    //@JoinColumn(name = "company_id")
     private User user;
 
     @NotNull

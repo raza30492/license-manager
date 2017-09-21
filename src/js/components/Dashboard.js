@@ -4,8 +4,13 @@ import { localeData } from '../reducers/localization';
 import {initialize} from '../actions/misc';
 
 import Box from 'grommet/components/Box';
+import Anchor from 'grommet/components/Anchor';
 import Section from 'grommet/components/Section';
 import Spinning from 'grommet/components/icons/Spinning';
+import Menu from 'grommet/components/Menu';
+import Header from 'grommet/components/Header';
+import Title from 'grommet/components/Title';
+import Search from 'grommet/components/Search';
 
 class Dashboard extends Component {
   constructor () {
@@ -46,6 +51,47 @@ class Dashboard extends Component {
       <Box>
         <Section direction="column" pad={{vertical: 'large', horizontal:'small'}}>
           <h1>Welcome to Andon System Application</h1>
+
+          <Header >
+            <Title>
+              Sample Title
+            </Title>
+            <Box flex={true}
+              justify='right'
+              direction='row'
+              responsive={false}>
+              <Menu inline={true}
+                direction='row'>
+                <Menu label='Label 1' 
+                  inline={false}>
+                  <Anchor href='#'
+                    className='active'>
+                    First
+                  </Anchor>
+                  <Anchor href='#'>
+                    Second
+                  </Anchor>
+                  <Anchor href='#'>
+                    Third
+                  </Anchor>
+                </Menu>
+                <Menu label='Label 2' 
+                  inline={false}>
+                  <Anchor href='#'
+                    className='active'>
+                    First
+                  </Anchor>
+                  <Anchor href='#'>
+                    Second
+                  </Anchor>
+                  <Anchor href='#'>
+                    Third
+                  </Anchor>
+                </Menu>
+              </Menu>
+            </Box>
+          </Header>
+
         </Section>
       </Box>
     );

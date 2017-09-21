@@ -2,8 +2,11 @@ package com.jazasoft.licensemanager.restcontroller;
 
 import com.jazasoft.licensemanager.ApiUrls;
 import com.jazasoft.licensemanager.assembler.LicenseAssembler;
+import com.jazasoft.licensemanager.dto.RestError;
 import com.jazasoft.licensemanager.entity.License;
 import com.jazasoft.licensemanager.service.LicenseService;
+import com.jazasoft.licensemanager.service.MyUserDetailsService;
+import com.jazasoft.licensemanager.service.ProductService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +34,10 @@ public class LicenseRestController {
 
     @Autowired
     private LicenseService licenseService;
+
+    @Autowired ProductService productService;
+
+    @Autowired MyUserDetailsService userDetailsService;
 
     @Autowired
     LicenseAssembler licenseAssembler;
@@ -64,8 +71,16 @@ public class LicenseRestController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> createLicense(@Valid @RequestBody License license) {
+    public ResponseEntity<?> createLicense(@Valid @RequestBody License license) {
         LOGGER.debug("createLicense():\n {}", license.toString());
+        if (!productService.exists(license.getProductId())){
+            RestError error = new RestError(404,40401,"Product with id = " + license.getProductId() + " not found","","");
+            return new ResponseEntity<>(error,HttpStatus.NOT_FOUND);
+
+        }else if (!userDetailsService.exists(license.getUserId())) {
+            RestError error = new RestError(404,40401,"User with id = " + license.getUserId() + " not found","","");
+            return new ResponseEntity<>(error,HttpStatus.NOT_FOUND);
+        }
         license = licenseService.save(license);
         Link selfLink = linkTo(LicenseRestController.class).slash(license.getId()).withSelfRel();
         return ResponseEntity.created(URI.create(selfLink.getHref())).build();

@@ -3,7 +3,8 @@ package com.jazasoft.licensemanager.service;
 import com.jazasoft.licensemanager.entity.Company;
 import com.jazasoft.licensemanager.entity.License;
 import com.jazasoft.licensemanager.entity.Product;
-import com.jazasoft.licensemanager.respository.ClientRepository;
+import com.jazasoft.licensemanager.entity.User;
+import com.jazasoft.licensemanager.respository.UserRepository;
 import com.jazasoft.licensemanager.respository.LicenseRepository;
 import com.jazasoft.licensemanager.respository.ProductRepository;
 import com.jazasoft.licensemanager.util.Utils;
@@ -28,14 +29,14 @@ public class LicenseService {
 
     private ProductRepository productRepository;
 
-    private ClientRepository clientRepository;
+    private UserRepository userRepository;
 
     private Mapper mapper;
 
-    public LicenseService(LicenseRepository licenseRepository, ProductRepository productRepository, ClientRepository clientRepository, Mapper mapper) {
+    public LicenseService(LicenseRepository licenseRepository, ProductRepository productRepository, UserRepository userRepository, Mapper mapper) {
         this.licenseRepository = licenseRepository;
         this.productRepository = productRepository;
-        this.clientRepository = clientRepository;
+        this.userRepository = userRepository;
         this.mapper = mapper;
     }
 
@@ -63,7 +64,8 @@ public class LicenseService {
     public License save(License license) {
         LOGGER.debug("save");
         Product product = productRepository.findOne(license.getProductId());
-        Company company = clientRepository.findOne(license.getUserId());
+        User user = userRepository.findOne(license.getUserId());
+        license.setUser(user);
         license.setProduct(product);
         license.setProductCode(product.getProductPrefix() + Utils.getRandomNumber(7));
         StringBuilder builder = new StringBuilder();
