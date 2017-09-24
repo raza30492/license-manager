@@ -33,7 +33,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
 @ActiveProfiles(value = "test")
-//@Ignore
+@Ignore
 public class LicenseIntegrationTest {
 
     @Autowired
@@ -71,7 +71,7 @@ public class LicenseIntegrationTest {
         params.add("productCode", "TNA5765713");
         params.add("productKey", "RTRD-DEQV-XNVO-ORUC");
         this.mvc
-                .perform(get(ApiUrls.ROOT_URL_LICENSES + ApiUrls.URL_LICENSES_VALIDATE)
+                .perform(get(ApiUrls.ROOT_URL_LICENSES + ApiUrls.URL_LICENSES_CHECK)
                         .header("Authorization", "Bearer " + accessToken)
                         .params(params)
                 )
@@ -86,7 +86,7 @@ public class LicenseIntegrationTest {
         params2.add("productCode", "TNA5765713");
         params2.add("productKey", "RTRD-DEQV-XNVO-ORMC");
         this.mvc
-                .perform(get(ApiUrls.ROOT_URL_LICENSES + ApiUrls.URL_LICENSES_VALIDATE)
+                .perform(get(ApiUrls.ROOT_URL_LICENSES + ApiUrls.URL_LICENSES_CHECK)
                         .header("Authorization", "Bearer " + accessToken)
                         .params(params2)
                 )
@@ -97,7 +97,7 @@ public class LicenseIntegrationTest {
         params3.add("productCode", "TNA576571376");
         params3.add("productKey", "RTRD-DEQV-XNVO-ORUC");
         this.mvc
-                .perform(get(ApiUrls.ROOT_URL_LICENSES + ApiUrls.URL_LICENSES_VALIDATE)
+                .perform(get(ApiUrls.ROOT_URL_LICENSES + ApiUrls.URL_LICENSES_CHECK)
                         .header("Authorization", "Bearer " + accessToken)
                         .params(params3)
                 )

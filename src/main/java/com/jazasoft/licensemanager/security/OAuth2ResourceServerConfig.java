@@ -1,6 +1,7 @@
 package com.jazasoft.licensemanager.security;
 
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
@@ -19,8 +20,8 @@ public class OAuth2ResourceServerConfig extends ResourceServerConfigurerAdapter 
                 .requestMatchers().antMatchers("/api/**")
             .and()
                 .authorizeRequests()               
-//                    .antMatchers("/api/users","/api/users/**").access("hasRole('ADMIN')")
-//                    .antMatchers("/api/**").authenticated()
+                    .antMatchers(HttpMethod.PATCH,"/api/licenses/activate").permitAll()
+                    .antMatchers(HttpMethod.GET,"/api/licenses/check").permitAll()
                     .antMatchers("/api/**").authenticated()
             .and()
                 .exceptionHandling().accessDeniedHandler(new OAuth2AccessDeniedHandler());

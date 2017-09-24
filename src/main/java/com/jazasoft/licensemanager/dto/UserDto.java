@@ -2,6 +2,7 @@ package com.jazasoft.licensemanager.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.jazasoft.licensemanager.Role;
+import com.jazasoft.licensemanager.entity.Company;
 import com.jazasoft.licensemanager.validation.Roles;
 import org.hibernate.validator.constraints.Email;
 import org.springframework.hateoas.core.Relation;
@@ -37,6 +38,8 @@ public class UserDto {
     private String mobile;
 
     private Boolean enabled;
+
+    private Company company;
 
     public UserDto() {
     }
@@ -120,6 +123,14 @@ public class UserDto {
 
     public void setEnabled(Boolean enabled) {
         this.enabled = enabled;
+    }
+
+    public Company getCompany() {
+        return company;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
     }
 
     @Override

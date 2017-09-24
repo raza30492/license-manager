@@ -245,9 +245,48 @@ public class UserIntegrationTest {
         this.mvc.perform(get(ApiUrls.ROOT_URL_USERS + "/{id}", id).header(HEADER_AUTH_KEY, "Bearer " + accessToken))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(contentType))
-                .andExpect(jsonPath("$.company.id",is(Integer.parseInt(id))))
                 .andExpect(jsonPath("$.company.name", is(company.getName())))
                 .andExpect(jsonPath("$.company.address.country",is(address.getCountry())));
+    }
+
+    //@Test
+    public void saveUserCompanyAtOnce() throws Exception{
+        UserDto user = new UserDto("Test2","User", "test_user2", "test2@gmail.com", "8987525008", "ROLE_USER");
+        Company company = new Company("Jaza Software Private Limited","Director");
+        Address address = new Address("Gayatri Illam", "27th Main, 1st Cross","Bangalore","Karnatka","India","560047");
+        company.setAddress(address);
+        user.setCompany(company);
+        MvcResult mvcResult = mvc
+                .perform(post(ApiUrls.ROOT_URL_USERS)
+                        .content(mapper.writeValueAsString(user))
+                        .contentType(MediaType.APPLICATION_JSON_UTF8)
+                        .header(HEADER_AUTH_KEY, "Bearer " + accessToken)
+                )
+                .andExpect(status().isCreated())
+                .andReturn();
+
+        System.out.println("Response body: " +mvcResult.getResponse().getContentAsString());
+//        String locationUri = mvcResult.getResponse().getHeader("Location");
+//        assertTrue(locationUri.contains(ApiUrls.ROOT_URL_USERS));
+//
+//        int idx = locationUri.lastIndexOf('/');
+//        String id = locationUri.substring(idx + 1);
+//
+//
+//
+//        mvc
+//                .perform(put(ApiUrls.ROOT_URL_USERS + ApiUrls.URL_USERS_USER_COMPANY,id)
+//                        .content(mapper.writeValueAsString(company))
+//                        .contentType(MediaType.APPLICATION_JSON)
+//                        .header(HEADER_AUTH_KEY, "Bearer " + accessToken)
+//                ).andExpect(status().isOk());
+//
+//        this.mvc.perform(get(ApiUrls.ROOT_URL_USERS + "/{id}", id).header(HEADER_AUTH_KEY, "Bearer " + accessToken))
+//                .andExpect(status().isOk())
+//                .andExpect(content().contentType(contentType))
+//                .andExpect(jsonPath("$.company.id",is(Integer.parseInt(id))))
+//                .andExpect(jsonPath("$.company.name", is(company.getName())))
+//                .andExpect(jsonPath("$.company.address.country",is(address.getCountry())));
     }
 
     public void saveUserCompanyBadRequest() throws Exception {}

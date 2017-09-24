@@ -4,6 +4,7 @@ import com.jazasoft.licensemanager.entity.Company;
 import com.jazasoft.licensemanager.entity.License;
 import com.jazasoft.licensemanager.entity.Product;
 import com.jazasoft.licensemanager.entity.User;
+import com.jazasoft.licensemanager.exception.InvalidLicenseException;
 import com.jazasoft.licensemanager.respository.UserRepository;
 import com.jazasoft.licensemanager.respository.LicenseRepository;
 import com.jazasoft.licensemanager.respository.ProductRepository;
@@ -53,6 +54,28 @@ public class LicenseService {
     public boolean exists(Long id) {
         LOGGER.debug("exists: id = {}", id);
         return licenseRepository.exists(id);
+    }
+
+    public License activate(User user, String productCode, String productKey) {
+        List<License> licenses = licenseRepository.findByUser(user);
+        if (licenses.size() == 0) {
+            throw new InvalidLicenseException("No License found for user [" + user.getFirstName() + " " + user.getLastName() + "]");
+        }
+        License license = licenses.stream().filter(lic -> lic.getProductCode().equals(productCode)).findAny().orElse(null);
+        if (license == null) {
+            throw new InvalidLicenseException("User does not have License for product code [" + productCode + "]");
+        }
+        if (license.getProductKey().equals(productKey)) {
+            if (!license.isActivated()) {
+                license.setActivated(true);
+                license.setActivatedOn(new Date());
+            }
+            license.setUserId(license.getUser().getId());
+            license.setProductId(license.getProduct().getId());
+
+            return license;
+        }
+        return null;
     }
 
     public License validate(String productCode, String productKey) {

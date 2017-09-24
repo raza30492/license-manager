@@ -10,6 +10,7 @@ import com.jazasoft.licensemanager.dto.OauthResponse;
 import com.jazasoft.licensemanager.entity.Address;
 import com.jazasoft.licensemanager.entity.Company;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +34,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
 @ActiveProfiles(value = "test")
-//@Ignore
+@Ignore
 public class CompanyIntegrationTest {
 
     @Autowired

@@ -17,6 +17,12 @@ public class UsernameAuditorAware implements AuditorAware<String> {
             return null;
         }
 
-        return ((User) authentication.getPrincipal()).getUsername();
+        if (authentication.getPrincipal() instanceof User) {
+            return ((User) authentication.getPrincipal()).getUsername();
+        }
+        if (authentication.getPrincipal() instanceof String) {
+            return (String) authentication.getPrincipal();
+        }
+        return null;
     }
 }

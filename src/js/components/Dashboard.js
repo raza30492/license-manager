@@ -10,7 +10,7 @@ import Spinning from 'grommet/components/icons/Spinning';
 import Menu from 'grommet/components/Menu';
 import Header from 'grommet/components/Header';
 import Title from 'grommet/components/Title';
-import Search from 'grommet/components/Search';
+//import Search from 'grommet/components/Search';
 
 class Dashboard extends Component {
   constructor () {

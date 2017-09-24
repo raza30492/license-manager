@@ -4,6 +4,7 @@ import com.jazasoft.licensemanager.ApiUrls;
 import com.jazasoft.licensemanager.assembler.LicenseAssembler;
 import com.jazasoft.licensemanager.dto.RestError;
 import com.jazasoft.licensemanager.entity.License;
+import com.jazasoft.licensemanager.entity.User;
 import com.jazasoft.licensemanager.service.LicenseService;
 import com.jazasoft.licensemanager.service.MyUserDetailsService;
 import com.jazasoft.licensemanager.service.ProductService;
@@ -19,7 +20,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 
@@ -32,8 +35,7 @@ public class LicenseRestController {
 
     private final Logger LOGGER = LoggerFactory.getLogger(LicenseRestController.class);
 
-    @Autowired
-    private LicenseService licenseService;
+    @Autowired LicenseService licenseService;
 
     @Autowired ProductService productService;
 
@@ -60,9 +62,33 @@ public class LicenseRestController {
         return new ResponseEntity<>(licenseAssembler.toResource(license), HttpStatus.OK);
     }
 
-    @GetMapping(ApiUrls.URL_LICENSES_VALIDATE)
-    public ResponseEntity<?> validateLicense(@RequestParam("productCode") String productCode, @RequestParam("productKey") String productKey) {
-        LOGGER.debug("validateLicense(): productCode = {}, productKey = {}",productCode, productKey);
+    @PatchMapping(ApiUrls.URL_LICENSES_ACTIVATE)
+    public ResponseEntity<?> activateLicense(@RequestParam("username") String username, @RequestParam("productCode") String productCode, @RequestParam("productKey") String productKey) {
+        LOGGER.debug("checkLicense(): productCode = {}, productKey = {}",productCode, productKey);
+        User user = userDetailsService.findByUsername(username);
+        if (user == null) {
+            user = userDetailsService.findByEmail(username);
+            if (user == null) {
+                Map<String, Object> resp = new HashMap<>();
+                resp.put("status","USER_NOT_FOUND");
+                resp.put("message", "User not found");
+                return new ResponseEntity<>(resp, HttpStatus.NOT_FOUND);
+            }
+        }
+        License license = licenseService.activate(user, productCode, productKey);
+        if (license != null) {
+            return new ResponseEntity<>(license, HttpStatus.OK);
+        } else {
+            Map<String, Object> resp = new HashMap<>();
+            resp.put("status","PRODUCT_ACTIVATION_FAILED");
+            resp.put("message", "Invalid Product Key");
+            return new ResponseEntity<>(resp, HttpStatus.OK);
+        }
+    }
+
+    @GetMapping(ApiUrls.URL_LICENSES_CHECK)
+    public ResponseEntity<?> checkLicense(@RequestParam("productCode") String productCode, @RequestParam("productKey") String productKey) {
+        LOGGER.debug("checkLicense(): productCode = {}, productKey = {}",productCode, productKey);
         License license = licenseService.validate(productCode, productKey);
         if (license == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
